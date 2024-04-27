@@ -575,9 +575,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1015365312}
+  - component: {fileID: 1015365314}
+  - component: {fileID: 1015365316}
   - component: {fileID: 1015365311}
   - component: {fileID: 1015365313}
-  - component: {fileID: 1015365314}
   - component: {fileID: 1015365315}
   m_Layer: 0
   m_Name: Player
@@ -729,6 +730,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1015365316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015365310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa95e5e61dbb4b47a165ac845932b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1015365311}
 --- !u!1 &1494770554
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,8 +831,9 @@ GameObject:
   - component: {fileID: 2025015132}
   - component: {fileID: 2025015131}
   - component: {fileID: 2025015130}
+  - component: {fileID: 2025015133}
   m_Layer: 0
-  m_Name: Module
+  m_Name: Modules
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -874,3 +889,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2025015133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025015129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 688f6fa3c990c8344aef0ed87753df0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 1015365314}
+  playerSpriteHandler: {fileID: 1015365316}

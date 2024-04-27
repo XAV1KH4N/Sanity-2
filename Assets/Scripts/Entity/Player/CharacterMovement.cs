@@ -1,16 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterMovement : Movement
 {
-    // Start is called before the first frame update
-
     [SerializeField]
     private Joystick joystick;
 
     private bool isMoving = false;
     private Vector2 direction = Vector2.zero;
+
+    public Action<Vector2> OnDirecetionChange;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class CharacterMovement : Movement
     {
         direction = newDirection;
         isMoving = true;
+        OnDirecetionChange?.Invoke(newDirection); // Do we need a ?
     }
 
     private void stopMovement()
