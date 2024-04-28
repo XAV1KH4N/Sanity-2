@@ -18,7 +18,7 @@ public class Joystick : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, I
     public int drag_movement_distance = 45;
 
     [SerializeField]
-    public int drag_offset_distance = 75; //Max range of joystick
+    public int drag_offset_distance = 75;
 
     [SerializeField]
     protected float look_dist = 0.25f;
