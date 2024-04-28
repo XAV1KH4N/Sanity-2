@@ -14,9 +14,14 @@ public class Movement : MonoBehaviour
 
     [SerializeField]
     protected Rigidbody2D rigidBody;
-   
 
-    protected bool moveInDirection(Vector2 direction)
+    public Action<Vector2> OnDirecetionChange;
+    public Action<bool> OnMovementChange;
+
+    private bool isMoving = false;
+    private Vector2 direction = Vector2.zero;
+
+    protected bool moveInDirection()
     {
         if (direction == Vector2.zero) return false;
 
@@ -56,5 +61,27 @@ public class Movement : MonoBehaviour
     private float calcSpeed(Vector2 direction)
     {
         return SPEED * Math.Max(Math.Abs(direction.x), Math.Abs(direction.y));
+    }
+
+    protected void setIsMoving(bool b)
+    {
+        isMoving = b;
+        OnMovementChange?.Invoke(b);
+    }
+    
+    protected bool getIsMoving()
+    {
+        return isMoving;
+    }
+
+    protected void setDirection(Vector2 newDirection)
+    {
+        direction = newDirection;
+        OnDirecetionChange?.Invoke(newDirection); // Do we need a ?
+    }
+
+    protected Vector2 getDirection()
+    {
+        return direction;
     }
 }

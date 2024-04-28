@@ -17,6 +17,7 @@ public class PlayerModule : MonoBehaviour {
     
     private void addPlayerMovementListeners()
     {
-        playerMovement.OnDirecetionChange += playerSpriteHandler.matchSpriteWithDirection;
+        playerMovement.OnDirecetionChange += playerSpriteHandler.refreshAnimationParameters;
+        playerMovement.OnMovementChange += playerSpriteHandler.refreshAnimationParameters;
     }
 }

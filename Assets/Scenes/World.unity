@@ -415,7 +415,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -580,6 +580,7 @@ GameObject:
   - component: {fileID: 1015365311}
   - component: {fileID: 1015365313}
   - component: {fileID: 1015365315}
+  - component: {fileID: 1015365317}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -628,12 +629,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4334783836991956000, guid: 2821c2366b1c3d74a9c598ecf04787cf, type: 3}
+  m_Sprite: {fileID: -1035542596, guid: febb18731b5d5a24ba91f0b00ba66363, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.48, y: 0.48}
+  m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -667,18 +668,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.165}
+  m_Offset: {x: 0.031021595, y: -1.0310587}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
-    newSize: {x: 0.48, y: 0.48}
+    oldSize: {x: 3, y: 3}
+    newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.08, y: 0.01}
+  m_Size: {x: 0.5621371, y: 0.062219203}
   m_EdgeRadius: 0
 --- !u!114 &1015365314
 MonoBehaviour:
@@ -692,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42213770887ff904098eed863376233e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPEED: 0.75
+  SPEED: 3
   movementFilter:
     useTriggers: 0
     useLayerMask: 0
@@ -729,7 +730,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1015365316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,6 +744,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1015365311}
+  animator: {fileID: 1015365317}
+--- !u!95 &1015365317
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015365310}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6b608032af97fe547b230774b5fefe59, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1494770554
 GameObject:
   m_ObjectHideFlags: 0

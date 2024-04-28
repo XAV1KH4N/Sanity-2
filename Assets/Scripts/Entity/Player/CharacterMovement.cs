@@ -8,11 +8,6 @@ public class CharacterMovement : Movement
     [SerializeField]
     private Joystick joystick;
 
-    private bool isMoving = false;
-    private Vector2 direction = Vector2.zero;
-
-    public Action<Vector2> OnDirecetionChange;
-
     void Start()
     {
         addListeners();
@@ -20,25 +15,24 @@ public class CharacterMovement : Movement
 
     private void FixedUpdate()
     {
-        if (isMoving) moveInDirection(direction);
+        if (getIsMoving()) moveInDirection();
     }
 
     private void addListeners()
     {
-        joystick.OnMove += setCurrentDirection;
+        joystick.OnMove += setDirectionAndMove;
+        joystick.OnLook += setDirection;
         joystick.OnStop += stopMovement;
     }
-
-    private void setCurrentDirection(Vector2 newDirection)
+    
+    private void setDirectionAndMove(Vector2 newDirection)
     {
-        direction = newDirection;
-        isMoving = true;
-        OnDirecetionChange?.Invoke(newDirection); // Do we need a ?
+        setDirection(newDirection);
+        setIsMoving(true);
     }
 
     private void stopMovement()
     {
-        isMoving = false;
+        setIsMoving(false);
     }
-
 }

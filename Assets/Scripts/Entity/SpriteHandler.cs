@@ -5,8 +5,21 @@ public class SpriteHandler : MonoBehaviour
     [SerializeField]
     private SpriteRenderer spriteRenderer;
 
-    public void matchSpriteWithDirection(Vector2 direction)
+    [SerializeField]
+    private Animator animator;
+
+    private static string HorizontalProperty = "Horizontal";
+    private static string VerticalProperty = "Vertical";
+    private static string IsMovingProperty = "IsMoving";
+
+    public void refreshAnimationParameters(Vector2 direction)
     {
-        spriteRenderer.flipX = direction.x < 0;
+        animator.SetFloat(HorizontalProperty, direction.x);
+        animator.SetFloat(VerticalProperty, direction.y);
+    }
+    
+    public void refreshAnimationParameters(bool isMoving)
+    {
+        animator.SetBool(IsMovingProperty, isMoving);
     }
 }
