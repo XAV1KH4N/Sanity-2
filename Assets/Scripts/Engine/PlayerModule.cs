@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerModule : MonoBehaviour {
+public class PlayerModule : AppModule {
 
     [SerializeField]
     private CharacterMovement playerMovement;
@@ -19,6 +19,11 @@ public class PlayerModule : MonoBehaviour {
     public void swingSword()
     {
         playerSpriteHandler.triggerAttack();
+        runTimedEvent(5, delegate ()
+        {
+            Debug.Log("Callback");
+        });
+        // start event
     }
 
     private void addPlayerMovementListeners()
