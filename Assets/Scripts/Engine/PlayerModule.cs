@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerModule : MonoBehaviour {
@@ -10,11 +8,19 @@ public class PlayerModule : MonoBehaviour {
     [SerializeField]
     private SpriteHandler playerSpriteHandler;
 
-    private void Start()
+    [SerializeField]
+    private AttackAction attackAction;
+
+    void Start()
     {
         addPlayerMovementListeners();
     }
-    
+
+    public void swingSword()
+    {
+        playerSpriteHandler.triggerAttack();
+    }
+
     private void addPlayerMovementListeners()
     {
         playerMovement.OnDirecetionChange += playerSpriteHandler.refreshAnimationParameters;
