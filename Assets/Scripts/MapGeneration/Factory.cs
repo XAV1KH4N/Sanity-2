@@ -7,7 +7,13 @@ using UnityEngine.Tilemaps;
 public class Factory : MonoBehaviour
 {
     [SerializeField]
-    private TreeDataModel tree;
+    private TileObjectDataModel roundTree;
+    
+    [SerializeField]
+    private TileObjectDataModel tallTree;
+    
+    [SerializeField]
+    private TileObjectDataModel pointyTree;
 
     public void createAt(Vector2Int coords, Tilemap map, TileObjectDataType type)
     {
@@ -19,8 +25,16 @@ public class Factory : MonoBehaviour
     {
         switch(type)
         {
-            case TileObjectDataType.TREE:
-                createTree(coords, map);
+            case TileObjectDataType.TALL_TREE:
+                createTiledObject(coords, map, tallTree);
+                break;
+            
+            case TileObjectDataType.POINTY_TREE:
+                createTiledObject(coords, map, pointyTree);
+                break;            
+            
+            case TileObjectDataType.ROUND_TREE:
+                createTiledObject(coords, map, roundTree);
                 break;
 
             default:
@@ -28,15 +42,14 @@ public class Factory : MonoBehaviour
         }
     }
 
-    private void createTree(Vector3Int coords, Tilemap map)
+    private void createTiledObject(Vector3Int coords, Tilemap map, TileObjectDataModel model)
     {
-        (int, int) dimensions = tree.getDimension();
-        Debug.Log("Creating Tree " + dimensions);
+        (int, int) dimensions = model.getDimension();
         for (int y = 0; y < dimensions.Item2; y++)
         {
             for (int x = 0; x < dimensions.Item1; x++)
             {
-                Tile tile = tree.getTile(x,y);
+                Tile tile = model.getTile(x,y);
                 Vector3Int relative = new Vector3Int(coords.x + x, coords.y - y);
                 map.SetTile(relative, tile);
             }

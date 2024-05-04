@@ -13,6 +13,8 @@ public class WorldModule : MonoBehaviour
 
     void Start()
     {
-        factory.createAt(new Vector3Int(3, 5, 0), collision, TileObjectDataType.TREE);
+        factory.createAt(new Vector3Int(2, 3, 0), collision, TileObjectDataType.ROUND_TREE);
+        factory.createAt(new Vector3Int(-5, 3, 0), collision, TileObjectDataType.TALL_TREE);
+        factory.createAt(new Vector3Int(-1, 1, 0), collision, TileObjectDataType.POINTY_TREE);
     }
 }

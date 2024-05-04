@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-public abstract class TileObjectDataModel : MonoBehaviour 
+public class TileObjectDataModel : MonoBehaviour 
 {
+    [SerializeField]
+    private Tile[] tiles;
+
     [SerializeField]
     protected TileObjectDataType type;
 
@@ -16,5 +20,10 @@ public abstract class TileObjectDataModel : MonoBehaviour
     public (int, int) getDimension()
     {
         return (width, height);
+    }
+
+    public Tile getTile(int x, int y)
+    {
+        return tiles[y * width + x];
     }
 }
