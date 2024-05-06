@@ -10,6 +10,9 @@ public class WorldModule : MonoBehaviour
     private Factory factory;
 
     [SerializeField]
+    private Tilemap ground;
+    
+    [SerializeField]
     private Tilemap collision;
 
     [SerializeField]
@@ -21,8 +24,14 @@ public class WorldModule : MonoBehaviour
     [SerializeField]
     private WorldGenerator generator;
 
+    [SerializeField]
+    private TileLookupService tileLookupService;
+
+    private TypeMapper typeMapper;
+
     void Start()
     {
+        typeMapper = new TypeMapper(tileLookupService, ground, collision);
         createMap();
     }
 
@@ -36,14 +45,9 @@ public class WorldModule : MonoBehaviour
     public void createMap()
     {
         Debug.Log("Creating map");
-        float[,] map = generator.createMap();
-        outputMap(map);
-    }
-
-    private void outputMap(float[,] map)
-    {
-        colourMapper.deleteMap(map);
-        levelMapper.printMap(map);
+        float[,] map = generator.createMap(); 
+        GroundType[,] mapType = levelMapper.mapType(map);
+        typeMapper.drawMap(mapType);
     }
 
     private void testTiledObjects()

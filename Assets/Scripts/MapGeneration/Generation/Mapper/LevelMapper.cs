@@ -5,12 +5,6 @@ using UnityEngine.Tilemaps;
 
 public class LevelMapper : MonoBehaviour
 {
-    [SerializeField]
-    private Tilemap tilemap;
-
-    [SerializeField]
-    private Tile blankTile;
-
     [SerializeField, Range(0.0f, 1f)]
     private float deepWaterLevel = 0.16f;
 
@@ -29,33 +23,27 @@ public class LevelMapper : MonoBehaviour
     [SerializeField, Range(0.0f, 1f)]
     private float groundLevel3 = 1f; // Doesnt matter, will always be else
 
-    public void printMap(float[,] map)
+    public GroundType[,] mapType(float[,] map)
     {
+        GroundType[,] groundTypes = new GroundType[map.GetLength(0), map.GetLength(1)];
         for (int i = 0; i < map.GetLength(0); i++)
         {
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                float n = map[i, j];                //1 = RED, 0 = GREEN
-
-                blankTile.color = chooseTile(n);
-                tilemap.SetTile(new Vector3Int(i, j, 0), blankTile);
+                float value = map[i, j];
+                groundTypes[i, j] = getType(value);
             }
         }
+        return groundTypes;
     }
 
-    private Color chooseTile(float value)
+    private GroundType getType(float value)
     {
-        if (value < deepWaterLevel) return color(45, 70, 175); // Deep Water
-        else if (value < shallowWaterLevel) return color(80, 145, 230); // Shallow Water
-        else if (value < sandLevel) return color(200, 200, 85); // Sand
-        else if (value < groundLevel1) return color(85, 200, 125); // Ground 1
-        else if (value < groundLevel2) return color(50, 150, 85); // Ground 2
-        else return color(20, 120, 55); // Ground 3
+        if (value < deepWaterLevel) return GroundType.DEEP_WATER; // Deep Water
+        else if (value < shallowWaterLevel) return GroundType.SHALLOW_WATER; // Shallow Water
+        else if (value < sandLevel) return GroundType.SAND; // Sand
+        else if (value < groundLevel1) return GroundType.LOWER_GROUND_GRASS; // Ground 1
+        else if (value < groundLevel2) return GroundType.MID_GROUND_GRASS; // Ground 2
+        else return GroundType.HIGH_GROUND_GRASS; // Ground 3
     }
-
-    private Color color(float r, float g, float b)
-    {
-        return new Color(r/255f, g/255f, b/255f);
-    }
-
 }
