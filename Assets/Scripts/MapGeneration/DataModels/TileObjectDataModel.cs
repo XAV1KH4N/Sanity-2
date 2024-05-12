@@ -26,4 +26,9 @@ public class TileObjectDataModel : MonoBehaviour
     {
         return tiles[y * width + x];
     }
+
+    public TileObjectDataType getType()
+    {
+        return type;
+    }
 }

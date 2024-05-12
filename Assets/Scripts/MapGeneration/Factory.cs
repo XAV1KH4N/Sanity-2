@@ -14,12 +14,18 @@ public class Factory : MonoBehaviour
     
     [SerializeField]
     private TileObjectDataModel pointyTree;
+    
+    [SerializeField]
+    private ColliderTemplateService colliderProvider;
+
+    private Dictionary<Vector3Int, TileData> datamap = new Dictionary<Vector3Int, TileData>();
+
+    public Action<Vector3Int, TileData> OnObjectEntry;
 
     public void createAt(Vector2Int coords, Tilemap map, TileObjectDataType type)
     {
         createAt(new Vector3Int(coords.x, coords.y, 0), map, type);
     }
-
 
     public void createAt(Vector3Int coords, Tilemap map, TileObjectDataType type)
     {
@@ -44,6 +50,8 @@ public class Factory : MonoBehaviour
 
     private void createTiledObject(Vector3Int coords, Tilemap map, TileObjectDataModel model)
     {
+        createCollider(coords, map, model);
+        datamap.Add(coords, new TileData(model.getType()));
         (int, int) dimensions = model.getDimension();
         for (int y = 0; y < dimensions.Item2; y++)
         {
@@ -54,5 +62,45 @@ public class Factory : MonoBehaviour
                 map.SetTile(relative, tile);
             }
         }
+    }
+
+    private void createCollider(Vector3Int coords, Tilemap map, TileObjectDataModel model)
+    {
+        if (model.getType() != TileObjectDataType.ROUND_TREE) return;
+
+        TiledObject obj = colliderProvider.createTiledObject(model.getType());
+        initTileObject(coords, obj);
+        Vector3 worldPos = findCenter(coords, map, model);
+        obj.transform.position = worldPos;
+    }
+
+    private void initTileObject(Vector3Int coords, TiledObject tileObj)
+    {
+        tileObj.init(coords);
+        tileObj.OnTrigger += handleObjectEntry;
+    } 
+
+    private void handleObjectEntry(Vector3Int coords)
+    {
+        OnObjectEntry?.Invoke(coords, datamap[coords]);
+    }
+
+    private Vector3 findCenter(Vector3Int coords, Tilemap map, TileObjectDataModel model)
+    {
+        Vector3 worldPos = map.GetCellCenterWorld(coords);
+
+        (int, int) dimensions = model.getDimension();
+
+        int width = dimensions.Item1;
+        int height = dimensions.Item2;
+
+        float x = width/2f;
+        float y = height/2f * 0.32f;
+        return worldPos + new Vector3(x, -y, 0);
+    }
+
+    public TileData getTileData(Vector3Int coords)
+    {
+        return datamap[coords];
     }
 }

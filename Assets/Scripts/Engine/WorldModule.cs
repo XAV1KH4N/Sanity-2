@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Timeline;
 
-public class WorldModule : MonoBehaviour
+public class WorldModule : AppModule
 {
     [SerializeField]
     private Factory factory;
@@ -26,34 +26,40 @@ public class WorldModule : MonoBehaviour
 
     [SerializeField]
     private TileLookupService tileLookupService;
-
+   
     private TypeMapper typeMapper;
 
     void Start()
     {
         typeMapper = new TypeMapper(tileLookupService, ground, collision);
+        factory.OnObjectEntry += handleOnObjectEntry;
         createMap();
+        testTiledObjects();
     }
 
     public void regenSeed()
     {
-        Debug.Log("Regen seed");
         generator.regenSeed();
         createMap();
     }
 
     public void createMap()
     {
-        Debug.Log("Creating map");
         float[,] map = generator.createMap(); 
         GroundType[,] mapType = levelMapper.mapType(map);
         typeMapper.drawMap(mapType);
     }
 
+    private void handleOnObjectEntry(Vector3Int coords, TileData data)
+    {
+        TileData dup = factory.getTileData(coords);
+        Debug.Log("Player near: " + dup.getType());
+    }
+
     private void testTiledObjects()
     {
         factory.createAt(new Vector3Int(2, 3, 0), collision, TileObjectDataType.ROUND_TREE);
-        factory.createAt(new Vector3Int(-5, 3, 0), collision, TileObjectDataType.TALL_TREE);
-        factory.createAt(new Vector3Int(-1, 1, 0), collision, TileObjectDataType.POINTY_TREE);
+        factory.createAt(new Vector3Int(-5, 3, 0), collision, TileObjectDataType.ROUND_TREE);
+        factory.createAt(new Vector3Int(-1, 1, 0), collision, TileObjectDataType.ROUND_TREE);
     }
 }

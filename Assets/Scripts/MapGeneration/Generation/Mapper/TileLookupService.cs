@@ -1,7 +1,9 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using Random = System.Random;
 
 public class TileLookupService : MonoBehaviour
 {
@@ -9,50 +11,74 @@ public class TileLookupService : MonoBehaviour
     private Tile groundTile1;
     
     [SerializeField]
+    private Tile groundTile2;
+    
+    [SerializeField]
+    private Tile groundTile3;
+    
+    [SerializeField]
+    private Tile groundTile4;
+    
+    [SerializeField]
     private Tile sandTile1;
+    
+    [SerializeField]
+    private Tile sandTile2;
+    
+    [SerializeField]
+    private Tile sandTile3;
+    
+    [SerializeField]
+    private Tile sandTile4;
     
     [SerializeField]
     private Tile waterTile1;
     
     [SerializeField]
+    private Tile deepWaterTile1;
+    
+    [SerializeField]
     private Tile blankTile;
 
-    public Tile getTile(TileType type)
+    private static Random rand = new Random();
+
+    private Tile[] groundTiles()
     {
-        switch (type)
-        {
-            case TileType.GRASS_TILE_1:
-                return groundTile1;
-
-            case TileType.WATER_TILE_1:
-                return waterTile1;
-
-            case TileType.SAND_TILE_1:
-                return sandTile1;
-
-            default:
-                return blankTile;
-        }
+        return new Tile[] { groundTile1, groundTile2, groundTile3, groundTile4 };
     }
-    
-    public Tile getTile(GroundType type)
+
+    private Tile[] sandTiles()
+    {
+        return new Tile[] { sandTile1, sandTile2, sandTile3, sandTile4 };
+    }
+
+    private Tile[] getTileSelections(GroundType type)
     {
         switch (type)
         {
             case GroundType.LOWER_GROUND_GRASS:
             case GroundType.MID_GROUND_GRASS:
             case GroundType.HIGH_GROUND_GRASS:
-                return groundTile1;
+                return groundTiles();
 
             case GroundType.DEEP_WATER:
+                return new Tile[] { deepWaterTile1 };
+
             case GroundType.SHALLOW_WATER:
-                return waterTile1;
+                return new Tile[] { waterTile1 };
 
             case GroundType.SAND:
-                return sandTile1;
+                return sandTiles();
 
             default:
-                return blankTile;
+                return new Tile[] { blankTile };
         }
+    }
+    
+    public Tile getTile(GroundType type)
+    {
+        Tile[] tiles = getTileSelections(type);
+        int r = rand.Next(tiles.Length);
+        return tiles[r];
     }
 }
