@@ -14,6 +14,9 @@ public class WorldModule : AppModule
     
     [SerializeField]
     private Tilemap collision;
+    
+    [SerializeField]
+    private Tilemap onTopFeature;
 
     [SerializeField]
     private ColourMapper colourMapper;
@@ -66,8 +69,8 @@ public class WorldModule : AppModule
 
     private void testTiledObjects()
     {
-        factory.createAt(new Vector3Int(2, 3, 0), collision, TileObjectDataType.ROUND_TREE);
-        factory.createAt(new Vector3Int(-5, 3, 0), collision, TileObjectDataType.ROUND_TREE);
-        factory.createAt(new Vector3Int(-1, 1, 0), collision, TileObjectDataType.ROUND_TREE);
+        factory.createAt(new Vector3Int(2, 3, 0), collision, onTopFeature, TileObjectDataType.ROUND_TREE);
+        factory.createAt(new Vector3Int(-5, 3, 0), collision, onTopFeature, TileObjectDataType.POINTY_TREE);
+        factory.createAt(new Vector3Int(-1, 1, 0), collision, onTopFeature, TileObjectDataType.TALL_TREE);
     }
 }
