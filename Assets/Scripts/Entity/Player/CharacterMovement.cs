@@ -25,7 +25,6 @@ public class CharacterMovement : Movement
 
     override protected float adjustedSpeed(float speed)
     {
-        Debug.Log(speedEval.ratio() + " " + speed + " " + speedEval.ratio() * speed);
         return speedEval.ratio() * speed; 
     }
 

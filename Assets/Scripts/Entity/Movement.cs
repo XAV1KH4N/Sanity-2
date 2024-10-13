@@ -21,8 +21,6 @@ abstract public class Movement : MonoBehaviour
     private bool isMoving = false;
     private Vector2 direction = Vector2.zero;
 
-    private string[] ignorableTags = new string[1] { "Player Hitbox" };
-
     protected bool moveInDirection()
     {
         if (direction == Vector2.zero) return false;
@@ -47,6 +45,7 @@ abstract public class Movement : MonoBehaviour
     {
         int countX = countCollisions(new Vector2(direction.x, 0), speed);
         int county = countCollisions(new Vector2(0, direction.y), speed);
+        Debug.Log(countX + " " + county);
         return (countX, county);
     }
 
@@ -58,26 +57,26 @@ abstract public class Movement : MonoBehaviour
             objs,
             speed * Time.fixedDeltaTime);
 
-        if (areCollisionsIgnorable(objs)) return 0;
+        Debug.Log(count);
+        foreach(RaycastHit2D obj in objs)
+        {
+            Debug.Log(obj.transform.gameObject.tag);
+        }
 
+        if (areCollisionsIgnorable(objs)) return 0;
         return count;
     }
 
     private bool areCollisionsIgnorable(List<RaycastHit2D> objs)
     {
-        if (objs.Count != 1) return false;
+        bool forall = true;
 
-        RaycastHit2D obj = objs[0];
-        string tag = obj.transform.gameObject.tag;
-
-        bool found = false;
-
-        foreach(string s in ignorableTags)
+        foreach(RaycastHit2D obj in objs)
         {
-            found = found || s == tag;
+            forall = forall && obj.transform.gameObject.tag.Equals("IGNORE");
         }
 
-        return found;
+        return forall;
     }
 
     protected float calcSpeed(Vector2 direction)
@@ -89,7 +88,6 @@ abstract public class Movement : MonoBehaviour
     {
         return speed;
     }
-
 
     protected void setIsMoving(bool b)
     {
