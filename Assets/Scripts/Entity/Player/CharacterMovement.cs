@@ -7,11 +7,26 @@ using UnityEngine;
 public class CharacterMovement : Movement
 {
     [SerializeField]
+    private PlayerModule playerModule;
+
+    [SerializeField]
+    private WorldModule worldModule;
+
+    [SerializeField]
     private Joystick joystick;
+
+    private GroundSpeedEvaluator speedEval;
 
     void Start()
     {
+        speedEval = new GroundSpeedEvaluator(playerModule, worldModule);
         addListeners();
+    }
+
+    override protected float adjustedSpeed(float speed)
+    {
+        Debug.Log(speedEval.ratio() + " " + speed + " " + speedEval.ratio() * speed);
+        return speedEval.ratio() * speed; 
     }
 
     private void FixedUpdate()

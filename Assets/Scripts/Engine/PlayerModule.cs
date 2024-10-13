@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerModule : AppModule {
 
@@ -10,6 +11,12 @@ public class PlayerModule : AppModule {
 
     [SerializeField]
     private AttackAction attackAction;
+
+    [SerializeField]
+    private BoxCollider2D playerBoxCollider;
+
+    [SerializeField]
+    private Tilemap groundLayer;
 
     void Start()
     {
@@ -24,6 +31,12 @@ public class PlayerModule : AppModule {
             Debug.Log("Callback");
         });
         // start event
+    }
+
+    public Vector3Int getPlayerLocation()
+    {
+        Vector3 pos = playerBoxCollider.transform.position;
+        return groundLayer.WorldToCell(pos);
     }
 
     private void addPlayerMovementListeners()

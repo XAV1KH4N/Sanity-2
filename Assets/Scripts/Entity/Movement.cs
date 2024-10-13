@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+abstract public class Movement : MonoBehaviour
 {
     [SerializeField]
-    private float SPEED = 0.75f;
+    protected float FLAT_SPEED = 3.75f;
 
     [SerializeField]
     protected ContactFilter2D movementFilter;
@@ -21,7 +21,7 @@ public class Movement : MonoBehaviour
     private bool isMoving = false;
     private Vector2 direction = Vector2.zero;
 
-    private String[] ignorableTags = new String[1] { "Player Hitbox" };
+    private string[] ignorableTags = new string[1] { "Player Hitbox" };
 
     protected bool moveInDirection()
     {
@@ -63,16 +63,16 @@ public class Movement : MonoBehaviour
         return count;
     }
 
-    private Boolean areCollisionsIgnorable(List<RaycastHit2D> objs)
+    private bool areCollisionsIgnorable(List<RaycastHit2D> objs)
     {
         if (objs.Count != 1) return false;
 
         RaycastHit2D obj = objs[0];
         string tag = obj.transform.gameObject.tag;
 
-        Boolean found = false;
+        bool found = false;
 
-        foreach(String s in ignorableTags)
+        foreach(string s in ignorableTags)
         {
             found = found || s == tag;
         }
@@ -80,12 +80,16 @@ public class Movement : MonoBehaviour
         return found;
     }
 
-
-
-    private float calcSpeed(Vector2 direction)
+    protected float calcSpeed(Vector2 direction)
     {
-        return SPEED * Math.Max(Math.Abs(direction.x), Math.Abs(direction.y));
+        return adjustedSpeed(FLAT_SPEED) * Math.Max(Math.Abs(direction.x), Math.Abs(direction.y));
     }
+
+    virtual protected float adjustedSpeed(float speed)
+    {
+        return speed;
+    }
+
 
     protected void setIsMoving(bool b)
     {

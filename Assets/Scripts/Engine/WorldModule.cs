@@ -28,6 +28,7 @@ public class WorldModule : AppModule
     private TileLookupService tileLookupService;
    
     private TypeMapper typeMapper;
+    private GroundType[,] cachedGroundTypes;
 
     void Start()
     {
@@ -45,9 +46,16 @@ public class WorldModule : AppModule
 
     public void createMap()
     {
-        float[,] map = generator.createMap(); 
-        GroundType[,] mapType = levelMapper.mapType(map);
-        typeMapper.drawMap(mapType);
+        float[,] map = generator.createMap();
+        cachedGroundTypes = levelMapper.mapType(map);
+        typeMapper.drawMap(cachedGroundTypes);
+    }
+
+    public GroundType getGroundTypeAt(Vector3Int pos)
+    {
+        if (pos.x < 0 || pos.x >= cachedGroundTypes.GetLength(0) || pos.y < 0 || pos.y >= cachedGroundTypes.GetLength(1))
+            return GroundType.GROUND_GRASS;
+        return cachedGroundTypes[pos.x, pos.y];        
     }
 
     private void handleOnObjectEntry(Vector3Int coords, TileData data)

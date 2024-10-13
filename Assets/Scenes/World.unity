@@ -755,10 +755,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad5fc928227e9614bac9daa853e2400e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drag_threshold: 0.6
-  drag_movement_distance: 45
+  drag_threshold: 0
+  drag_movement_distance: 65
   drag_offset_distance: 75
-  look_dist: 0.25
+  look_dist: 0
 --- !u!114 &363263982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1510,7 +1510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42213770887ff904098eed863376233e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPEED: 3
+  FLAT_SPEED: 3.75
   movementFilter:
     useTriggers: 1
     useLayerMask: 0
@@ -1526,6 +1526,8 @@ MonoBehaviour:
     minNormalAngle: 0
     maxNormalAngle: 0
   rigidBody: {fileID: 1015365315}
+  playerModule: {fileID: 2025015133}
+  worldModule: {fileID: 2025015134}
   joystick: {fileID: 363263981}
 --- !u!50 &1015365315
 Rigidbody2D:
@@ -2368,6 +2370,8 @@ MonoBehaviour:
   playerMovement: {fileID: 1015365314}
   playerSpriteHandler: {fileID: 1015365316}
   attackAction: {fileID: 0}
+  playerBoxCollider: {fileID: 1015365313}
+  groundLayer: {fileID: 174384619}
 --- !u!114 &2025015134
 MonoBehaviour:
   m_ObjectHideFlags: 0

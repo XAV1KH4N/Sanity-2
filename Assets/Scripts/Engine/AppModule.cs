@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AppModule : MonoBehaviour // Maybe split appModule into multiple interfaces .. ?
 {
-
     public void runTimedEvent(int seconds, Action callback)
     {
         TimedWorker worker = new TimedWorker(seconds, callback);

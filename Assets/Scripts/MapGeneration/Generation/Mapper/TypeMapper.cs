@@ -24,7 +24,10 @@ public class TypeMapper
             {
                 GroundType type = types[i, j];
                 Tile tile = tiles.getTile(type);
-                groundLayer.SetTile(new Vector3Int(i, j, 0), tile);
+                if (type == GroundType.DEEP_WATER) 
+                    collisionLayer.SetTile(new Vector3Int(i, j, 0), tile);
+                else 
+                    groundLayer.SetTile(new Vector3Int(i, j, 0), tile);
             }
         }
     }
