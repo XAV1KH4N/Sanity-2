@@ -30,6 +30,12 @@ public class TileLookupService : MonoBehaviour
     
     [SerializeField]
     private Tile sandTile4;
+
+    [SerializeField]
+    private Tile rockTile1;
+    
+    [SerializeField]
+    private Tile snowTile1;
     
     [SerializeField]
     private Tile waterTile1;
@@ -56,9 +62,13 @@ public class TileLookupService : MonoBehaviour
     {
         switch (type)
         {
-            case GroundType.LOWER_GROUND_GRASS:
-            case GroundType.MID_GROUND_GRASS:
-            case GroundType.HIGH_GROUND_GRASS:
+            case GroundType.SNOW:
+                return new Tile[] { snowTile1 };
+
+            case GroundType.ROCK:
+                return new Tile[] { rockTile1 };
+
+            case GroundType.GROUND_GRASS:
                 return groundTiles();
 
             case GroundType.DEEP_WATER:

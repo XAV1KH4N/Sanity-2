@@ -21,6 +21,8 @@ public class Movement : MonoBehaviour
     private bool isMoving = false;
     private Vector2 direction = Vector2.zero;
 
+    private String[] ignorableTags = new String[1] { "Player Hitbox" };
+
     protected bool moveInDirection()
     {
         if (direction == Vector2.zero) return false;
@@ -50,12 +52,34 @@ public class Movement : MonoBehaviour
 
     private int countCollisions(Vector2 direction, float speed)
     {
+        List<RaycastHit2D> objs = new List<RaycastHit2D>();
         int count = rigidBody.Cast(direction,
             movementFilter,
-            new List<RaycastHit2D>(),
+            objs,
             speed * Time.fixedDeltaTime);
+
+        if (areCollisionsIgnorable(objs)) return 0;
+
         return count;
     }
+
+    private Boolean areCollisionsIgnorable(List<RaycastHit2D> objs)
+    {
+        if (objs.Count != 1) return false;
+
+        RaycastHit2D obj = objs[0];
+        string tag = obj.transform.gameObject.tag;
+
+        Boolean found = false;
+
+        foreach(String s in ignorableTags)
+        {
+            found = found || s == tag;
+        }
+
+        return found;
+    }
+
 
 
     private float calcSpeed(Vector2 direction)
@@ -77,7 +101,7 @@ public class Movement : MonoBehaviour
     protected void setDirection(Vector2 newDirection)
     {
         direction = newDirection;
-        OnDirecetionChange?.Invoke(newDirection); // Do we need a ?
+        OnDirecetionChange?.Invoke(newDirection);
     }
 
     protected Vector2 getDirection()

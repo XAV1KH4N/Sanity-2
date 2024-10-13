@@ -376,9 +376,9 @@ MonoBehaviour:
   deepWaterLevel: 0.25
   shallowWaterLevel: 0.34
   sandLevel: 0.41
-  groundLevel1: 0.51
-  groundLevel2: 0.8
-  groundLevel3: 1
+  groundLevel: 0.7
+  rockLevel: 0.82
+  snowLevel: 1
 --- !u!1 &174384616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1400,7 @@ GameObject:
   - component: {fileID: 1015365317}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1820,7 +1820,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 130
+  orthographic size: 250
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1844,7 +1844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1174060143}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 150, y: 125, z: -1}
+  m_LocalPosition: {x: 250, y: 250, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1864,7 +1864,7 @@ GameObject:
   - component: {fileID: 1420768383}
   m_Layer: 0
   m_Name: PlayerHitbox
-  m_TagString: Untagged
+  m_TagString: Player Hitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1950,6 +1950,8 @@ MonoBehaviour:
   sandTile2: {fileID: 11400000, guid: 644f0f09662cb734490baa3b84f49ab1, type: 2}
   sandTile3: {fileID: 11400000, guid: 703d0b2d5bb6d4b48bd55d3c41d1f51a, type: 2}
   sandTile4: {fileID: 11400000, guid: 0e1e5b9f8316d87479a15c1ae9b78739, type: 2}
+  rockTile1: {fileID: 11400000, guid: 09793f06dd5ff6345bf933d40469d9c8, type: 2}
+  snowTile1: {fileID: 11400000, guid: 9c4242104917a69409de9cba1bbfdb21, type: 2}
   waterTile1: {fileID: 11400000, guid: 340268a9e6033c842b41e8c3545d9da7, type: 2}
   deepWaterTile1: {fileID: 11400000, guid: a439eafcafe6c3248be2fb1b4d3fce02, type: 2}
   blankTile: {fileID: 11400000, guid: 856f30620a6939f439d51e1a53f20555, type: 2}
@@ -2262,9 +2264,9 @@ MonoBehaviour:
   deepWaterLevel: 0.25
   shallowWaterLevel: 0.34
   sandLevel: 0.41
-  groundLevel1: 0.51
-  groundLevel2: 0.8
-  groundLevel3: 1
+  groundLevel: 0.55
+  rockLevel: 0.85
+  snowLevel: 1
 --- !u!4 &1949728611
 Transform:
   m_ObjectHideFlags: 0

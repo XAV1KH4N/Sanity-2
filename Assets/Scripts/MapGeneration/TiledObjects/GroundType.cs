@@ -7,7 +7,7 @@ public enum GroundType
     DEEP_WATER,
     SHALLOW_WATER,
     SAND,
-    LOWER_GROUND_GRASS,
-    MID_GROUND_GRASS,
-    HIGH_GROUND_GRASS
+    GROUND_GRASS,
+    ROCK,
+    SNOW
 }

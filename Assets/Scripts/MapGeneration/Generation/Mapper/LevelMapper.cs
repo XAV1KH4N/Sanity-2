@@ -6,22 +6,22 @@ using UnityEngine.Tilemaps;
 public class LevelMapper : MonoBehaviour
 {
     [SerializeField, Range(0.0f, 1f)]
-    private float deepWaterLevel = 0.16f;
+    protected float deepWaterLevel = 0.16f;
 
     [SerializeField, Range(0.0f, 1f)]
-    private float shallowWaterLevel = 0.32f;
+    protected float shallowWaterLevel = 0.32f;
 
     [SerializeField, Range(0.0f, 1f)]
-    private float sandLevel= 0.45f;
+    protected float sandLevel= 0.45f;
 
     [SerializeField, Range(0.0f, 1f)]
-    private float groundLevel1 = 0.55f;
+    protected float groundLevel = 0.85f;
 
     [SerializeField, Range(0.0f, 1f)]
-    private float groundLevel2 = 0.80f;
+    protected float rockLevel = 0.9f;
     
     [SerializeField, Range(0.0f, 1f)]
-    private float groundLevel3 = 1f; // Doesnt matter, will always be else
+    protected float snowLevel = 1f; // Doesnt matter, will always be else
 
     public GroundType[,] mapType(float[,] map)
     {
@@ -42,8 +42,8 @@ public class LevelMapper : MonoBehaviour
         if (value < deepWaterLevel) return GroundType.DEEP_WATER; // Deep Water
         else if (value < shallowWaterLevel) return GroundType.SHALLOW_WATER; // Shallow Water
         else if (value < sandLevel) return GroundType.SAND; // Sand
-        else if (value < groundLevel1) return GroundType.LOWER_GROUND_GRASS; // Ground 1
-        else if (value < groundLevel2) return GroundType.MID_GROUND_GRASS; // Ground 2
-        else return GroundType.HIGH_GROUND_GRASS; // Ground 3
+        else if (value < groundLevel) return GroundType.GROUND_GRASS; // Ground 1
+        else if (value < rockLevel) return GroundType.ROCK; // Ground 2
+        else return GroundType.SNOW; // Ground 3
     }
 }
