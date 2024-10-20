@@ -45,7 +45,6 @@ abstract public class Movement : MonoBehaviour
     {
         int countX = countCollisions(new Vector2(direction.x, 0), speed);
         int county = countCollisions(new Vector2(0, direction.y), speed);
-        Debug.Log(countX + " " + county);
         return (countX, county);
     }
 
@@ -57,10 +56,9 @@ abstract public class Movement : MonoBehaviour
             objs,
             speed * Time.fixedDeltaTime);
 
-        Debug.Log(count);
         foreach(RaycastHit2D obj in objs)
         {
-            Debug.Log(obj.transform.gameObject.tag);
+            //Debug.Log(obj.transform.gameObject.tag);
         }
 
         if (areCollisionsIgnorable(objs)) return 0;

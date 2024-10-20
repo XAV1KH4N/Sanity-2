@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour {
@@ -43,6 +44,12 @@ public class WorldGenerator : MonoBehaviour {
     public float[,] createMap()
     {
         return createPerlinWithOctaves();
+    }
+
+    public FeatureData createFeatures(RandomGenerator random)
+    {
+        ObjectGenerator gen = new ObjectGenerator(random, new Vector2Int(mapWidth, mapHeight));
+        return gen.createFeatures();
     }
 
     private float[,] createPerlinWithOctaves()

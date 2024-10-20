@@ -33,10 +33,11 @@ public class PlayerModule : AppModule {
         // start event
     }
 
-    public Vector3Int getPlayerLocation()
+    public Vector2Int getPlayerLocation()
     {
         Vector3 pos = playerBoxCollider.transform.position;
-        return groundLayer.WorldToCell(pos);
+        Vector3Int coords3d = groundLayer.WorldToCell(pos);
+        return new Vector2Int(coords3d.x, coords3d.y);
     }
 
     private void addPlayerMovementListeners()

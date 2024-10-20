@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Factory : MonoBehaviour
-{
+{ 
     [SerializeField]
     private TileObjectDataModel roundTree;
     
@@ -18,32 +18,35 @@ public class Factory : MonoBehaviour
     [SerializeField]
     private ColliderTemplateService colliderProvider;
 
-    private Dictionary<Vector3Int, TileData> datamap = new Dictionary<Vector3Int, TileData>();
+    [SerializeField]
+    private Tilemap ground;
+        
+    [SerializeField]
+    private Tilemap collision;
+    
+    [SerializeField]
+    private Tilemap upperFeature;
 
-    public Action<Vector3Int, TileData> OnObjectEntry;
+    private Map map;
 
-    public void createAt(Vector2Int coords, Tilemap map, Tilemap onTopFeature, TileObjectDataType type)
+    public Action<Vector2Int, TileData> OnObjectEntry;
+
+    public void createAt(Vector2Int coords, TileObjectDataType type)
     {
-        createAt(new Vector3Int(coords.x, coords.y, 0), map, onTopFeature, type);
-    }
+        if (map.isCoordTaken(coords) || !isSpaceAvailable(coords, type)) return;
 
-    public void createAt(Vector3Int coords, Tilemap map, Tilemap onTopFeature, TileObjectDataType type)
-    {
         switch(type)
         {
             case TileObjectDataType.TALL_TREE:
-                createTiledObject(coords, map, tallTree);
-                addOnTop(coords, onTopFeature, tallTree);
+                createTree(coords, tallTree);
                 break;
             
             case TileObjectDataType.POINTY_TREE:
-                createTiledObject(coords, map, pointyTree);
-                addOnTop(coords, onTopFeature, pointyTree);
+                createTree(coords, pointyTree);
                 break;            
             
             case TileObjectDataType.ROUND_TREE:
-                createTiledObject(coords, map, roundTree);
-                addOnTop(coords, onTopFeature, roundTree);
+                createTree(coords, roundTree);
                 break;
 
             default:
@@ -51,7 +54,42 @@ public class Factory : MonoBehaviour
         }
     }
 
-    private void addOnTop(Vector3Int coords, Tilemap featureMap, TileObjectDataModel model)
+    private TileObjectDataModel getTileObjectDataModel(TileObjectDataType type)
+    {
+        switch (type)
+        {
+            case TileObjectDataType.TALL_TREE:
+                return tallTree;
+            case TileObjectDataType.POINTY_TREE:
+                return pointyTree;
+
+            case TileObjectDataType.ROUND_TREE:
+                return roundTree;
+
+            default:
+                return null;
+        }
+    }
+
+    public void setMap(Map map)
+    {
+        this.map = map;
+    }
+
+    private bool createTree(Vector2Int coords, TileObjectDataModel model)
+    {
+        if (map.isTileGrass(coords))
+        {
+            updateCollidersAndMap(coords, model);
+            addTopToUpperFeatures(coords, model);
+            addBottomToCollsion(coords, model);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void addTopToUpperFeatures(Vector2Int coords, TileObjectDataModel model)
     {
         (int, int) dimensions = model.getDimension();
         for (int y = 0; y < 2; y++)
@@ -60,15 +98,13 @@ public class Factory : MonoBehaviour
             {
                 Tile tile = model.getTile(x, y);
                 Vector3Int relative = new Vector3Int(coords.x + x, coords.y - y);
-                featureMap.SetTile(relative, tile);
+                upperFeature.SetTile(relative, tile);
             }
         }
     }
 
-    private void createTiledObject(Vector3Int coords, Tilemap map, TileObjectDataModel model)
+    private void addBottomToCollsion(Vector2Int coords, TileObjectDataModel model)
     {
-        createCollider(coords, map, model);
-        datamap.Add(coords, new TileData(model.getType()));
         (int, int) dimensions = model.getDimension();
         for (int y = 0; y < dimensions.Item2; y++)
         {
@@ -76,35 +112,55 @@ public class Factory : MonoBehaviour
             {
                 Tile tile = model.getTile(x,y);
                 Vector3Int relative = new Vector3Int(coords.x + x, coords.y - y);
-                map.SetTile(relative, tile);
+                collision.SetTile(relative, tile);
+            }
+        }
+    }
+    
+    private void addCompleteToCollision(Vector2Int coords, TileObjectDataModel model)
+    {
+        (int, int) dimensions = model.getDimension();
+        for (int y = 0; y < dimensions.Item2; y++)
+        {
+            for (int x = 0; x < dimensions.Item1; x++)
+            {
+                Tile tile = model.getTile(x,y);
+                Vector3Int relative = new Vector3Int(coords.x + x, coords.y - y);
+                collision.SetTile(relative, tile);
             }
         }
     }
 
-    private void createCollider(Vector3Int coords, Tilemap map, TileObjectDataModel model)
+    private void updateCollidersAndMap(Vector2Int coords, TileObjectDataModel model)
     {
-        if (model.getType() != TileObjectDataType.ROUND_TREE) return;
+        TileData data = new TileData(model.getType());
+        createCollider(coords, model);
+        map.addTiledObject(coords, data);
+    }
 
+    private void createCollider(Vector2Int coords, TileObjectDataModel model)
+    {
         TiledObject obj = colliderProvider.createTiledObject(model.getType());
         initTileObject(coords, obj);
-        Vector3 worldPos = findCenter(coords, map, model);
+        Vector3 worldPos = findCenter(coords, model);
         obj.transform.position = worldPos;
     }
 
-    private void initTileObject(Vector3Int coords, TiledObject tileObj)
+    private void initTileObject(Vector2Int coords, TiledObject tileObj)
     {
         tileObj.init(coords);
         tileObj.OnTrigger += handleObjectEntry;
     } 
 
-    private void handleObjectEntry(Vector3Int coords)
+    private void handleObjectEntry(Vector2Int coords)
     {
-        OnObjectEntry?.Invoke(coords, datamap[coords]);
+        OnObjectEntry?.Invoke(coords, map.getTileData(coords));
     }
 
-    private Vector3 findCenter(Vector3Int coords, Tilemap map, TileObjectDataModel model)
+    private Vector3 findCenter(Vector2Int coords, TileObjectDataModel model)
     {
-        Vector3 worldPos = map.GetCellCenterWorld(coords);
+        Vector3Int coords3d = new Vector3Int(coords.x, coords.y);
+        Vector3 worldPos = ground.GetCellCenterWorld(coords3d);
 
         (int, int) dimensions = model.getDimension();
 
@@ -116,8 +172,19 @@ public class Factory : MonoBehaviour
         return worldPos + new Vector3(x, -y, 0);
     }
 
-    public TileData getTileData(Vector3Int coords)
+    private bool isSpaceAvailable(Vector2Int coords, TileObjectDataType type)
     {
-        return datamap[coords];
+        TileObjectDataModel model = getTileObjectDataModel(type);
+
+        (int, int) dimensions = model.getDimension();
+        for (int y = 0; y < dimensions.Item2; y++)
+        {
+            for (int x = 0; x < dimensions.Item1; x++)
+            {
+                Vector2Int relative = new Vector2Int(coords.x + x, coords.y - y);
+                if (map.isCoordTaken(relative) || collision.GetTile(new(relative.x, relative.y,0)) != null) return false;
+            }
+        }
+        return true;
     }
 }

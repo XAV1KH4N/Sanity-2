@@ -123,6 +123,69 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &10445107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 10445108}
+  - component: {fileID: 10445110}
+  - component: {fileID: 10445109}
+  m_Layer: 0
+  m_Name: TallTreeDetectionCollider
+  m_TagString: IGNORE
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &10445108
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10445107}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.81665754, y: -0.0418787, z: -0.005991605}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2101512197}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &10445109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10445107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5512c9ca987a8774ea2b78e1c0380d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerCollider: {fileID: 10445110}
+  self: {fileID: 10445107}
+--- !u!70 &10445110
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10445107}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 1.5, y: 3}
+  m_Direction: 0
 --- !u!1 &27674387
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +404,9 @@ MonoBehaviour:
   tallTree: {fileID: 1454340518}
   pointyTree: {fileID: 1434946236}
   colliderProvider: {fileID: 2101512196}
+  ground: {fileID: 174384619}
+  collision: {fileID: 533268765}
+  upperFeature: {fileID: 707714556}
 --- !u!114 &146183915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,7 +1251,7 @@ GameObject:
   - component: {fileID: 707714555}
   - component: {fileID: 707714554}
   m_Layer: 0
-  m_Name: OnTopFeature
+  m_Name: upperFeature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1610,11 +1676,11 @@ GameObject:
   - component: {fileID: 824226398}
   m_Layer: 0
   m_Name: RoundTreeDetectionCollider
-  m_TagString: Untagged
+  m_TagString: IGNORE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!70 &824226396
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1628,8 +1694,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.015607953, y: -0.088498}
-  m_Size: {x: 2.7007096, y: 3.5806086}
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 3.25, y: 4}
   m_Direction: 0
 --- !u!4 &824226397
 Transform:
@@ -2130,6 +2196,69 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1369291973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1369291974}
+  - component: {fileID: 1369291976}
+  - component: {fileID: 1369291975}
+  m_Layer: 0
+  m_Name: PointyTreeDetectionCollider
+  m_TagString: IGNORE
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1369291974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369291973}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.81665754, y: -0.0418787, z: -0.005991605}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2101512197}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1369291975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369291973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5512c9ca987a8774ea2b78e1c0380d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerCollider: {fileID: 1369291976}
+  self: {fileID: 1369291973}
+--- !u!70 &1369291976
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369291973}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 2, y: 3.25}
+  m_Direction: 0
 --- !u!1 &1420768380
 GameObject:
   m_ObjectHideFlags: 0
@@ -2143,7 +2272,7 @@ GameObject:
   - component: {fileID: 1420768383}
   m_Layer: 0
   m_Name: PlayerHitbox
-  m_TagString: Player Hitbox
+  m_TagString: IGNORE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2665,7 +2794,7 @@ MonoBehaviour:
   factory: {fileID: 146183914}
   ground: {fileID: 174384619}
   collision: {fileID: 533268765}
-  onTopFeature: {fileID: 707714556}
+  upperFeature: {fileID: 0}
   colourMapper: {fileID: 1027680451}
   levelMapper: {fileID: 146183916}
   generator: {fileID: 146183915}
@@ -2712,8 +2841,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundTree: {fileID: 824226398}
-  tallTree: {fileID: 0}
-  pointyTree: {fileID: 0}
+  tallTree: {fileID: 10445109}
+  pointyTree: {fileID: 1369291975}
 --- !u!4 &2101512197
 Transform:
   m_ObjectHideFlags: 0
@@ -2727,6 +2856,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 824226397}
+  - {fileID: 10445108}
+  - {fileID: 1369291974}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
