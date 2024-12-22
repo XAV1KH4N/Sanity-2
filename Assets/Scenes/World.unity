@@ -445,6 +445,9 @@ MonoBehaviour:
   groundLevel: 0.7
   rockLevel: 0.82
   snowLevel: 1
+  plains: 0.45
+  forrest: 0.75
+  swamp: 0.1
 --- !u!1 &174384616
 GameObject:
   m_ObjectHideFlags: 0
@@ -2350,19 +2353,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3ef39955b6b2a44ad571c126a02b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundTile1: {fileID: 11400000, guid: 87945ceb955518d48a020a9f868d30bd, type: 2}
-  groundTile2: {fileID: 11400000, guid: 5e37d0874791a4b47a70a522e18f2d96, type: 2}
-  groundTile3: {fileID: 11400000, guid: 6a41f6091282eca48bdeaf4fa0a21dd8, type: 2}
-  groundTile4: {fileID: 11400000, guid: e30028a6bfb05eb49ba2e2f30b49eaef, type: 2}
-  sandTile1: {fileID: 11400000, guid: af658c38f8ca23d45912f131887a3343, type: 2}
-  sandTile2: {fileID: 11400000, guid: 644f0f09662cb734490baa3b84f49ab1, type: 2}
-  sandTile3: {fileID: 11400000, guid: 703d0b2d5bb6d4b48bd55d3c41d1f51a, type: 2}
-  sandTile4: {fileID: 11400000, guid: 0e1e5b9f8316d87479a15c1ae9b78739, type: 2}
-  rockTile1: {fileID: 11400000, guid: 09793f06dd5ff6345bf933d40469d9c8, type: 2}
-  snowTile1: {fileID: 11400000, guid: 9c4242104917a69409de9cba1bbfdb21, type: 2}
-  waterTile1: {fileID: 11400000, guid: 340268a9e6033c842b41e8c3545d9da7, type: 2}
-  deepWaterTile1: {fileID: 11400000, guid: a439eafcafe6c3248be2fb1b4d3fce02, type: 2}
-  blankTile: {fileID: 11400000, guid: 856f30620a6939f439d51e1a53f20555, type: 2}
+  groundTile1: {fileID: 11400000, guid: 70faa9a90454efd4e872d38fc038ee06, type: 2}
+  groundTile2: {fileID: 11400000, guid: 733c35752ec46c64cbd4e34ca027e931, type: 2}
+  groundTile3: {fileID: 11400000, guid: c19bad97a9547e44390ab64f6ca3e832, type: 2}
+  groundTile4: {fileID: 11400000, guid: 9cfded3dc359f9f4ba79bf070b06f501, type: 2}
+  groundForrestTile1: {fileID: 11400000, guid: cdaa8591c8dba2041b71136f189a08ce, type: 2}
+  groundSwampTile1: {fileID: 11400000, guid: b6ee2881608a97b43ae9970709cd01ab, type: 2}
+  sandTile1: {fileID: 11400000, guid: ef9ab4865b0601b48a53f496d6d45417, type: 2}
+  sandTile2: {fileID: 11400000, guid: b30dfd58e9a62b54bb23e39c2c9669bb, type: 2}
+  sandTile3: {fileID: 11400000, guid: 80b97113102d08a4b8a4ae5630009fe9, type: 2}
+  sandTile4: {fileID: 11400000, guid: bcd10994cd71edd40a6281435e750d5c, type: 2}
+  sandyMudTile1: {fileID: 11400000, guid: 067e21c2135d39641aabb43e2f3d7592, type: 2}
+  MudTile1: {fileID: 11400000, guid: 1fadd97e274025244b0648fe17c25097, type: 2}
+  rockTile1: {fileID: 11400000, guid: c1bf6d483d129b249945b256d2e1de06, type: 2}
+  snowTile1: {fileID: 11400000, guid: b8b377e822ea78544a5e1eb97327fa13, type: 2}
+  waterTile1: {fileID: 11400000, guid: 933c6ad2c8035ad40bdd7a67add67dd4, type: 2}
+  deepWaterTile1: {fileID: 11400000, guid: 2e3d784a265e8da47952a227232ccc7a, type: 2}
+  blankTile: {fileID: 11400000, guid: 0e6b63698a96a7b4598bcb512023355a, type: 2}
   debugTile: {fileID: 11400000, guid: ffebe5170ef9da542bc132cd15112469, type: 2}
 --- !u!4 &1432136838
 Transform:
@@ -2677,6 +2684,9 @@ MonoBehaviour:
   groundLevel: 0.55
   rockLevel: 0.85
   snowLevel: 1
+  plains: 0.45
+  forrest: 0.75
+  swamp: 0.1
 --- !u!4 &1949728611
 Transform:
   m_ObjectHideFlags: 0

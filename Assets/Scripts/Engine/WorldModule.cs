@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Timeline;
@@ -42,7 +43,6 @@ public class WorldModule : AppModule
 
         factory.OnObjectEntry += handleOnObjectEntry;
         createMap();
-        testTiledObjects();
     }
 
     public void regenSeed()
@@ -53,18 +53,13 @@ public class WorldModule : AppModule
 
     public void createMap()
     {
-        float[,] noiseMap = generator.createMap();
-        GroundType[,] groundTypes = levelMapper.mapType(noiseMap);
-        FeatureData data = generator.createFeatures(random);
+        GroundType[,] groundTypes = createGround();
+        FeatureData data = createFeatureData();
+        
+        initMap(groundTypes);
+        //initFactory(data);
 
-        map = new Map(groundTypes);
-        typeMapper.drawMap(groundTypes);
-
-        factory.setMap(map);
-        data.combined().ForEach(a => factory.createAt(a.Item1, a.Item2));
-
-        List<Vector2Int> markers = map.getKeys();
-        typeMapper.drawMarkers(markers);
+        drawMap(groundTypes);
     }
 
     public GroundType getGroundTypeAt(Vector2Int coords)
@@ -76,6 +71,41 @@ public class WorldModule : AppModule
     {
         TileData dup = map.getTileData(coords);
         Debug.Log("Player near: " + dup.getType());
+    }
+
+    private void drawMap(GroundType[,] groundTypes)
+    {
+        List<Vector2Int> markers = map.getKeys();
+
+        typeMapper.drawMap(groundTypes);
+        //typeMapper.drawMarkers(markers);
+    }
+
+    private void initFactory(FeatureData data)
+    {
+        factory.setMap(map);
+        data.combined().ForEach(a => factory.createAt(a.Item1, a.Item2));
+    }
+
+    private void initMap(GroundType[,] groundTypes)
+    {
+        map = new Map(groundTypes);
+    }
+
+    private FeatureData createFeatureData()
+    {
+        return generator.createFeatures(random);
+    }
+
+    private GroundType[,] createGround()
+    {
+        float[,] noiseWorldMap = generator.createMap();
+
+        generator.regenSeed();
+        float[,] noiseBiomeMap = generator.createMap();
+
+        GroundType[,] groundTypes = levelMapper.mapType(noiseWorldMap, noiseBiomeMap);
+        return groundTypes;
     }
 
     private void testTiledObjects()

@@ -45,7 +45,7 @@ public class WorldGenerator : MonoBehaviour {
     {
         return createPerlinWithOctaves();
     }
-
+    
     public FeatureData createFeatures(RandomGenerator random)
     {
         ObjectGenerator gen = new ObjectGenerator(random, new Vector2Int(mapWidth, mapHeight));
