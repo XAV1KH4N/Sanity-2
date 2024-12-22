@@ -46,6 +46,9 @@ public class TileLookupService : MonoBehaviour
     [SerializeField]
     private Tile blankTile;
 
+    [SerializeField]
+    private Tile debugTile;
+
     private static Random rand = new Random();
 
     private Tile[] groundTiles()
@@ -79,6 +82,9 @@ public class TileLookupService : MonoBehaviour
 
             case GroundType.SAND:
                 return sandTiles();
+            
+            case GroundType.DEBUG_TILE:
+                return new Tile[] { debugTile };
 
             default:
                 return new Tile[] { blankTile };

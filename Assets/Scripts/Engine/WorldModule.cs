@@ -62,6 +62,9 @@ public class WorldModule : AppModule
 
         factory.setMap(map);
         data.combined().ForEach(a => factory.createAt(a.Item1, a.Item2));
+
+        List<Vector2Int> markers = map.getKeys();
+        typeMapper.drawMarkers(markers);
     }
 
     public GroundType getGroundTypeAt(Vector2Int coords)
@@ -78,7 +81,7 @@ public class WorldModule : AppModule
     private void testTiledObjects()
     {
         factory.createAt(new(2, 3), TileObjectDataType.ROUND_TREE);
-        factory.createAt(new(-5, 3), TileObjectDataType.POINTY_TREE);
-        factory.createAt(new(-1, 1), TileObjectDataType.TALL_TREE);
+        factory.createAt(new(15, 3), TileObjectDataType.POINTY_TREE);
+        factory.createAt(new(6, 5), TileObjectDataType.TALL_TREE);
     }
 }

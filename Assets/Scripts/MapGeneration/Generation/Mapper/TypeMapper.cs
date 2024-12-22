@@ -31,4 +31,13 @@ public class TypeMapper
             }
         }
     }
+
+    public void drawMarkers(List<Vector2Int> markers)
+    {
+        Tile tile = tiles.getTile(GroundType.DEBUG_TILE);
+        foreach(Vector2Int marker in markers)
+        {
+            groundLayer.SetTile(new Vector3Int(marker.x, marker.y, 0), tile);
+        }
+    }
 }

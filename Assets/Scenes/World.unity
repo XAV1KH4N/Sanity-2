@@ -184,7 +184,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.25}
-  m_Size: {x: 1.5, y: 3}
+  m_Size: {x: 2, y: 3}
   m_Direction: 0
 --- !u!1 &27674387
 GameObject:
@@ -2257,7 +2257,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.25}
-  m_Size: {x: 2, y: 3.25}
+  m_Size: {x: 2.5, y: 3.25}
   m_Direction: 0
 --- !u!1 &1420768380
 GameObject:
@@ -2363,6 +2363,7 @@ MonoBehaviour:
   waterTile1: {fileID: 11400000, guid: 340268a9e6033c842b41e8c3545d9da7, type: 2}
   deepWaterTile1: {fileID: 11400000, guid: a439eafcafe6c3248be2fb1b4d3fce02, type: 2}
   blankTile: {fileID: 11400000, guid: 856f30620a6939f439d51e1a53f20555, type: 2}
+  debugTile: {fileID: 11400000, guid: ffebe5170ef9da542bc132cd15112469, type: 2}
 --- !u!4 &1432136838
 Transform:
   m_ObjectHideFlags: 0

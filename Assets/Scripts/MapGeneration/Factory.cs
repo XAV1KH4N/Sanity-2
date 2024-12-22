@@ -172,6 +172,8 @@ public class Factory : MonoBehaviour
         return worldPos + new Vector3(x, -y, 0);
     }
 
+    //Maybe move this logic to the objectSpawner
+    // More effiect, some sort of cache to record all taken up spaces
     private bool isSpaceAvailable(Vector2Int coords, TileObjectDataType type)
     {
         TileObjectDataModel model = getTileObjectDataModel(type);

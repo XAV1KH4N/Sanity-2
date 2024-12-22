@@ -9,5 +9,7 @@ public enum GroundType
     SAND,
     GROUND_GRASS,
     ROCK,
-    SNOW
+    SNOW,
+
+    DEBUG_TILE
 }
