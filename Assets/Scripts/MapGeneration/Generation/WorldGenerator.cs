@@ -11,6 +11,9 @@ public class WorldGenerator : MonoBehaviour {
     // Separate class for turing this data to 
 
     [SerializeField]
+    private ObjectGeneratorMetaData metaData;
+
+    [SerializeField]
     private int mapWidth = 100;
     
     [SerializeField]
@@ -46,9 +49,10 @@ public class WorldGenerator : MonoBehaviour {
         return createPerlinWithOctaves();
     }
     
-    public FeatureData createFeatures(RandomGenerator random)
+    public FeatureData createFeatures(RandomGenerator random, List<(Vector2Int, BiomeType)> samples)
     {
-        ObjectGenerator gen = new ObjectGenerator(random, new Vector2Int(mapWidth, mapHeight));
+        Vector2Int size = new Vector2Int(mapWidth, mapHeight);
+        ObjectGenerator gen = new ObjectGenerator(random, metaData, size, samples);
         return gen.createFeatures();
     }
 

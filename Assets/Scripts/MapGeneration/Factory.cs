@@ -73,16 +73,49 @@ public class Factory : MonoBehaviour
 
     public void setMap(Map map)
     {
+        wipe();
         this.map = map;
+    }
+
+    private void wipe()
+    {
+        collision.ClearAllTiles();
+        upperFeature.ClearAllTiles();
+    }
+
+    private bool isBottomGround(Vector2Int coords, TileObjectDataModel model)
+    {
+        bool isGrass = true;
+        
+        int height = model.getDimension().Item2;
+        int width = model.getDimension().Item1;
+
+        for (int x = 0; x < width; x++)
+        {
+            Vector2Int bottomCoords = new Vector2Int(coords.x + x, coords.y - height + 1);
+            bool isGround = GroundTypeUtils.isGround(map.getGroundTypeAt(bottomCoords));
+            isGrass = isGrass && isGround;
+        }
+        
+        for (int x = 0; x < width; x++)
+        {
+            Vector2Int bottomCoords = new Vector2Int(coords.x + x, coords.y - height + 2);
+            bool isGround = GroundTypeUtils.isGround(map.getGroundTypeAt(bottomCoords));
+            isGrass = isGrass && isGround;
+        }
+        return isGrass;
     }
 
     private bool createTree(Vector2Int coords, TileObjectDataModel model)
     {
-        if (map.isTileGrass(coords))
+
+        if (isBottomGround(coords, model))
         {
             updateCollidersAndMap(coords, model);
             addTopToUpperFeatures(coords, model);
             addBottomToCollsion(coords, model);
+
+            upperFeature.SetTile(new Vector3Int(coords.x, coords.y), roundTree.getTile(2, 2));
             return true;
         }
 
@@ -104,20 +137,6 @@ public class Factory : MonoBehaviour
     }
 
     private void addBottomToCollsion(Vector2Int coords, TileObjectDataModel model)
-    {
-        (int, int) dimensions = model.getDimension();
-        for (int y = 0; y < dimensions.Item2; y++)
-        {
-            for (int x = 0; x < dimensions.Item1; x++)
-            {
-                Tile tile = model.getTile(x,y);
-                Vector3Int relative = new Vector3Int(coords.x + x, coords.y - y);
-                collision.SetTile(relative, tile);
-            }
-        }
-    }
-    
-    private void addCompleteToCollision(Vector2Int coords, TileObjectDataModel model)
     {
         (int, int) dimensions = model.getDimension();
         for (int y = 0; y < dimensions.Item2; y++)
@@ -184,9 +203,26 @@ public class Factory : MonoBehaviour
             for (int x = 0; x < dimensions.Item1; x++)
             {
                 Vector2Int relative = new Vector2Int(coords.x + x, coords.y - y);
-                if (map.isCoordTaken(relative) || collision.GetTile(new(relative.x, relative.y,0)) != null) return false;
+                bool isCoordTaken = map.isCoordTaken(relative);
+                bool isCollision = collision.GetTile(new(relative.x, relative.y, 0)) != null;
+                bool isWithinBounds = relative.x >= 0 && relative.y >= 0 && relative.y < map.getHeight() - 1 && relative.x < map.getWidth() - 1;
+                if (isCoordTaken || isCollision || !isWithinBounds) return false;
             }
         }
         return true;
+    }
+
+    public List<(Vector2Int, BiomeType)> sampleChunks()
+    {
+        List<(Vector2Int, BiomeType)> samples = new List<(Vector2Int, BiomeType)>();
+
+        foreach (Vector2Int marker in map.getKeys())
+        {
+            GroundType ground = map.getGroundTypeAt(marker);
+            BiomeType biome = BiomeTypeUtils.getBiomeType(ground);
+            samples.Add((marker, biome));
+        }
+
+        return samples;
     }
 }

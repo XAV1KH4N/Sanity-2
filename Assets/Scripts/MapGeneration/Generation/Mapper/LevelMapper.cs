@@ -26,10 +26,10 @@ public class LevelMapper : MonoBehaviour
 
     // Biome Levels
     [SerializeField, Range(0.0f, 1f)]
-    protected float plains = 0.45f;
+    protected float plains = 0.5f;
     
     [SerializeField, Range(0.0f, 1f)]
-    protected float forrest = 0.75f;
+    protected float forrest = 0.85f;
     
     [SerializeField, Range(0.0f, 1f)]
     protected float swamp = 0.1f;

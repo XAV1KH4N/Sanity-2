@@ -53,13 +53,14 @@ public class WorldModule : AppModule
 
     public void createMap()
     {
+        Debug.Log("Begin Map Generation");
         GroundType[,] groundTypes = createGround();
-        FeatureData data = createFeatureData();
         
         initMap(groundTypes);
-        //initFactory(data);
-
+        initFactory();
         drawMap(groundTypes);
+        
+        Debug.Log("Complete");
     }
 
     public GroundType getGroundTypeAt(Vector2Int coords)
@@ -81,9 +82,13 @@ public class WorldModule : AppModule
         //typeMapper.drawMarkers(markers);
     }
 
-    private void initFactory(FeatureData data)
+    private void initFactory()
     {
         factory.setMap(map);
+
+        List<(Vector2Int, BiomeType)> sample = factory.sampleChunks();
+
+        FeatureData data = createFeatureData(sample);
         data.combined().ForEach(a => factory.createAt(a.Item1, a.Item2));
     }
 
@@ -92,9 +97,9 @@ public class WorldModule : AppModule
         map = new Map(groundTypes);
     }
 
-    private FeatureData createFeatureData()
+    private FeatureData createFeatureData(List<(Vector2Int, BiomeType)> sample)
     {
-        return generator.createFeatures(random);
+        return generator.createFeatures(random, sample);
     }
 
     private GroundType[,] createGround()

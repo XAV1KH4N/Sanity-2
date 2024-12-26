@@ -386,7 +386,7 @@ Transform:
   - {fileID: 27674388}
   - {fileID: 1647078269}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &146183914
 MonoBehaviour:
@@ -419,8 +419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7babbfbf104aa3e43b00f72241702cfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 500
-  mapHeight: 500
+  metaData: {fileID: 0}
+  mapWidth: 150
+  mapHeight: 150
   scale: 85
   persistance: 0.7
   lacunarity: 1.75
@@ -439,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a661718f1ca11444bb15343842166301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deepWaterLevel: 0.25
+  deepWaterLevel: 0
   shallowWaterLevel: 0.34
   sandLevel: 0.41
   groundLevel: 0.7
@@ -623,7 +624,7 @@ Transform:
   - {fileID: 1027680452}
   - {fileID: 1949728611}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &273482329
 GameObject:
@@ -1976,6 +1977,98 @@ Transform:
   m_Father: {fileID: 188057034}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1120175427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1120175432}
+  - component: {fileID: 1120175431}
+  - component: {fileID: 1120175430}
+  - component: {fileID: 1120175429}
+  - component: {fileID: 1120175428}
+  m_Layer: 0
+  m_Name: ObjectSpawnerMetaData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1120175428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120175427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc75da7f0a077dd47b44c2a8ff461f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  k_points: 7
+  min_dist: 4
+--- !u!114 &1120175429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120175427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 420644c8b2c1c6d4da9afcf626ac05e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  k_points: 7
+  min_dist: 4
+--- !u!114 &1120175430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120175427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8328b9607462648bae3e9b313d3bbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  k_points: 7
+  min_dist: 4
+--- !u!114 &1120175431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120175427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc4888489f3f7149a2f04be40da1d67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointyTreeMetaData: {fileID: 1120175430}
+  tallTreeMetaData: {fileID: 1120175428}
+  roundTreeMetaData: {fileID: 1120175429}
+--- !u!4 &1120175432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120175427}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.9169219, y: -2.1225164, z: 0.31769598}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149046805
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,7 +2457,7 @@ MonoBehaviour:
   sandTile3: {fileID: 11400000, guid: 80b97113102d08a4b8a4ae5630009fe9, type: 2}
   sandTile4: {fileID: 11400000, guid: bcd10994cd71edd40a6281435e750d5c, type: 2}
   sandyMudTile1: {fileID: 11400000, guid: 067e21c2135d39641aabb43e2f3d7592, type: 2}
-  MudTile1: {fileID: 11400000, guid: 1fadd97e274025244b0648fe17c25097, type: 2}
+  mudTile1: {fileID: 0}
   rockTile1: {fileID: 11400000, guid: c1bf6d483d129b249945b256d2e1de06, type: 2}
   snowTile1: {fileID: 11400000, guid: b8b377e822ea78544a5e1eb97327fa13, type: 2}
   waterTile1: {fileID: 11400000, guid: 933c6ad2c8035ad40bdd7a67add67dd4, type: 2}
@@ -2384,7 +2477,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1434946235
 GameObject:
@@ -2870,5 +2963,5 @@ Transform:
   - {fileID: 10445108}
   - {fileID: 1369291974}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
