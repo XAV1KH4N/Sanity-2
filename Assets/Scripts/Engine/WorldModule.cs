@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Timeline;
 
 public class WorldModule : AppModule
 {
@@ -76,19 +72,15 @@ public class WorldModule : AppModule
 
     private void drawMap(GroundType[,] groundTypes)
     {
-        List<Vector2Int> markers = map.getKeys();
-
         typeMapper.drawMap(groundTypes);
-        //typeMapper.drawMarkers(markers);
+        //typeMapper.drawMarkers(map.getKeys());
     }
 
     private void initFactory()
     {
         factory.setMap(map);
 
-        List<(Vector2Int, BiomeType)> sample = factory.sampleChunks();
-
-        FeatureData data = createFeatureData(sample);
+        FeatureData data = createFeatureData(map);
         data.combined().ForEach(a => factory.createAt(a.Item1, a.Item2));
     }
 
@@ -97,9 +89,9 @@ public class WorldModule : AppModule
         map = new Map(groundTypes);
     }
 
-    private FeatureData createFeatureData(List<(Vector2Int, BiomeType)> sample)
+    private FeatureData createFeatureData(Map map)
     {
-        return generator.createFeatures(random, sample);
+        return generator.createFeatures(random, map);
     }
 
     private GroundType[,] createGround()

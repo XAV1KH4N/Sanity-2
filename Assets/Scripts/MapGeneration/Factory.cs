@@ -115,7 +115,6 @@ public class Factory : MonoBehaviour
             addTopToUpperFeatures(coords, model);
             addBottomToCollsion(coords, model);
 
-            upperFeature.SetTile(new Vector3Int(coords.x, coords.y), roundTree.getTile(2, 2));
             return true;
         }
 
@@ -210,19 +209,5 @@ public class Factory : MonoBehaviour
             }
         }
         return true;
-    }
-
-    public List<(Vector2Int, BiomeType)> sampleChunks()
-    {
-        List<(Vector2Int, BiomeType)> samples = new List<(Vector2Int, BiomeType)>();
-
-        foreach (Vector2Int marker in map.getKeys())
-        {
-            GroundType ground = map.getGroundTypeAt(marker);
-            BiomeType biome = BiomeTypeUtils.getBiomeType(ground);
-            samples.Add((marker, biome));
-        }
-
-        return samples;
     }
 }

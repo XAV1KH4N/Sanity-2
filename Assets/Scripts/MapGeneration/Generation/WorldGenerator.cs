@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using Random = System.Random;
 
 public class WorldGenerator : MonoBehaviour {
@@ -49,10 +45,9 @@ public class WorldGenerator : MonoBehaviour {
         return createPerlinWithOctaves();
     }
     
-    public FeatureData createFeatures(RandomGenerator random, List<(Vector2Int, BiomeType)> samples)
+    public FeatureData createFeatures(RandomGenerator random, Map map)
     {
-        Vector2Int size = new Vector2Int(mapWidth, mapHeight);
-        ObjectGenerator gen = new ObjectGenerator(random, metaData, size, samples);
+        ObjectGenerator gen = new ObjectGenerator(random, map, metaData);
         return gen.createFeatures();
     }
 
