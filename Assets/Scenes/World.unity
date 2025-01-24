@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc75da7f0a077dd47b44c2a8ff461f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  k_points: 6
+  k_points: 3
   min_dist: 3
 --- !u!114 &1120175429
 MonoBehaviour:
@@ -2037,7 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8328b9607462648bae3e9b313d3bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  k_points: 6
+  k_points: 3
   min_dist: 2
 --- !u!114 &1120175431
 MonoBehaviour:
@@ -2051,6 +2051,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc4888489f3f7149a2f04be40da1d67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blend: 0.15
   treeVariance: 6
   pointyTreeMetaData: {fileID: 1120175430}
   tallTreeMetaData: {fileID: 1120175428}
