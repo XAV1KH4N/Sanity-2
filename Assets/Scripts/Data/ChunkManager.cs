@@ -42,6 +42,10 @@ public class ChunkManager
         return getChunkFor(coord).get(coord);
     }
 
+    public List<Chunk> getChunks() {
+        return chunks.Values.ToList();
+    }
+
     public List<Vector2Int> getKeys()
     {
         return chunks.Keys.ToList();

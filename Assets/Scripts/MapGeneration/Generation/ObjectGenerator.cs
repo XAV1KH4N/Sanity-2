@@ -55,7 +55,7 @@ public class ObjectGenerator
                 TileObjectDataType poachedType = treeTypeFor(b);
                 data.addSamples(samples.Item1, trees);
                 data.addSamples(poachedType, poached);
-                Debug.Log(trees.Count + " " + samples.Item1 + " | " + poached.Count + " " + poachedType);
+                //Debug.Log(trees.Count + " " + samples.Item1 + " | " + poached.Count + " " + poachedType);
             }
         }
 
@@ -120,7 +120,6 @@ public class ObjectGenerator
 
     private (TileObjectDataType, List<Vector2Int>) populateFeatureData(Vector2Int point, BiomeType biome)
     {
-        Debug.Log("metaData " + metaData);
         bool rand = random.randomInt(0, metaData.treeVariance) == 1;
         TileObjectDataType type = TileObjectDataType.TALL_TREE;
         List<Vector2Int> samples = new List<Vector2Int>();
@@ -188,20 +187,6 @@ public class ObjectGenerator
     {
         int val = (int)type;
         grid[point.x, point.y] = val;
-        return;
-
-        for (int x = 0; x < treeMetaData.getWidth(); x++)
-        {
-            for (int y = 0; y < treeMetaData.getHeight(); y++)
-            {
-                Vector2Int newPoint = new Vector2Int(point.x + x, point.y + y);
-                bool inBound = newPoint.x >= 0 && newPoint.y >= 0 && newPoint.x < grid.GetLength(0) && newPoint.y < grid.GetLength(1);
-                if (inBound)
-                {
-                    grid[point.x, point.y] = val;
-                }
-            }
-        }
     }
 
     private bool near(Vector2Int new_point, int min_dist, TileObjectDataType type)

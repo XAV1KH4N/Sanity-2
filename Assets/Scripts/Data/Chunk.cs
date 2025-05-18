@@ -10,7 +10,7 @@ public class Chunk
 
     private Vector2Int marker;
 
-    private Dictionary<Vector2Int, TileData> chunks = new Dictionary<Vector2Int, TileData>();
+    private Dictionary<Vector2Int, TileData> objs = new Dictionary<Vector2Int, TileData>();
 
     public Chunk(Vector2Int marker)
     {
@@ -19,25 +19,30 @@ public class Chunk
 
     public void add(Vector2Int coords, TileData data)
     {
-        chunks.Add(coords, data);
+        objs.Add(coords, data);
     }
 
     public TileData get(Vector2Int coord)
     {
-        return chunks[coord];
+        return objs[coord];
     }
     
     public bool contains(Vector2Int coord)
     {
-        return chunks.ContainsKey(coord);
+        return objs.ContainsKey(coord);
+    }
+
+    public int count()
+    {
+        return objs.Count;
     }
 
     public List<Vector2Int> getAllCoords()
     {
         List<Vector2Int> coords = new List<Vector2Int>();
-        for(int x = 0; x < Width; x++)
+        for (int x = 0; x < Width; x++)
         {
-            for(int y = 0; y < Height; y++)
+            for (int y = 0; y < Height; y++)
             {
                 Vector2Int offset = new Vector2Int(x, y);
                 coords.Add(offset + marker);

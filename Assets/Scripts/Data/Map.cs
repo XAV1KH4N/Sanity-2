@@ -18,6 +18,11 @@ public class Map
         this.chunks = new ChunkManager(width, height);
     }
 
+    public List<Chunk> getChunks()
+    {
+        return chunks.getChunks();
+    }
+
     public GroundType getGroundTypeAt(Vector2Int coords)
     {
         if (coords.x < 0 || coords.x >= width || coords.y < 0 || coords.y >= height) // out of bounds
