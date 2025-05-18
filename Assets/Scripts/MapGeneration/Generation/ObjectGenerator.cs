@@ -120,9 +120,7 @@ public class ObjectGenerator
 
     private (TileObjectDataType, List<Vector2Int>) populateFeatureData(Vector2Int point, BiomeType biome)
     {
-        Debug.Log(random);
-        Debug.Log(metaData);
-        Debug.Log(metaData.treeVariance);
+        Debug.Log("metaData " + metaData);
         bool rand = random.randomInt(0, metaData.treeVariance) == 1;
         TileObjectDataType type = TileObjectDataType.TALL_TREE;
         List<Vector2Int> samples = new List<Vector2Int>();
