@@ -15,6 +15,9 @@ public class CharacterMovement : Movement
     [SerializeField]
     private Joystick joystick;
 
+    [SerializeField]
+    private SwipeController swiper;
+
     private GroundSpeedEvaluator speedEval;
 
     void Start()
@@ -35,14 +38,15 @@ public class CharacterMovement : Movement
 
     private void addListeners()
     {
-        joystick.OnMove += setDirectionAndMove;
-        joystick.OnLook += setDirection;
+        swiper.OnLook += setLookDirection;
+
+        joystick.OnMove += handleMoveDirection;
         joystick.OnStop += stopMovement;
     }
     
-    private void setDirectionAndMove(Vector2 newDirection)
+    private void handleMoveDirection(Vector2 newDirection)
     {
-        setDirection(newDirection);
+        setMovementDirection(newDirection);
         setIsMoving(true);
     }
 

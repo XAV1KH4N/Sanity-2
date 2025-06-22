@@ -15,29 +15,31 @@ abstract public class Movement : MonoBehaviour
     [SerializeField]
     protected Rigidbody2D rigidBody;
 
-    public Action<Vector2> OnDirecetionChange;
+    public Action<Vector2> OnLookDirectionChange;
+    public Action<Vector2> OnMoveDirectionChange;
     public Action<bool> OnMovementChange;
 
     private bool isMoving = false;
-    private Vector2 direction = Vector2.zero;
+    private Vector2 lookDirection = Vector2.zero;
+    private Vector2 movementDirection = Vector2.zero;
 
     protected bool moveInDirection()
     {
-        if (direction == Vector2.zero) return false;
+        if (movementDirection == Vector2.zero) return false;
 
-        float directionalSpeed = calcSpeed(direction);
-        (int, int) counts = countCollisionsForDirection(direction, directionalSpeed);
+        float directionalSpeed = calcSpeed(movementDirection);
+        (int, int) counts = countCollisionsForDirection(movementDirection, directionalSpeed);
 
         float x = 0;
         float y = 0;
 
-        if (counts.Item1 == 0) x = direction.x;
-        if (counts.Item2 == 0) y = direction.y;
-        
+        if (counts.Item1 == 0) x = movementDirection.x;
+        if (counts.Item2 == 0) y = movementDirection.y;
+
         Vector2 finalDirection = new Vector2(x, y);
         Vector2 newPos = rigidBody.position + finalDirection * directionalSpeed * Time.fixedDeltaTime;
         rigidBody.MovePosition(newPos);
-        
+
         return finalDirection != Vector2.zero;
     }
 
@@ -56,10 +58,6 @@ abstract public class Movement : MonoBehaviour
             objs,
             speed * Time.fixedDeltaTime);
 
-        foreach(RaycastHit2D obj in objs)
-        {
-            //Debug.Log(obj.transform.gameObject.tag);
-        }
 
         if (areCollisionsIgnorable(objs)) return 0;
         return count;
@@ -69,7 +67,7 @@ abstract public class Movement : MonoBehaviour
     {
         bool forall = true;
 
-        foreach(RaycastHit2D obj in objs)
+        foreach (RaycastHit2D obj in objs)
         {
             forall = forall && obj.transform.gameObject.tag.Equals("IGNORE");
         }
@@ -92,20 +90,32 @@ abstract public class Movement : MonoBehaviour
         isMoving = b;
         OnMovementChange?.Invoke(b);
     }
-    
+
     protected bool getIsMoving()
     {
         return isMoving;
     }
 
-    protected void setDirection(Vector2 newDirection)
+    protected void setMovementDirection(Vector2 newDirection)
     {
-        direction = newDirection;
-        OnDirecetionChange?.Invoke(newDirection);
+        movementDirection = newDirection;
+        OnMoveDirectionChange?.Invoke(newDirection);
     }
 
-    protected Vector2 getDirection()
+    protected void setLookDirection(Vector2 newDirection)
     {
-        return direction;
+        Debug.Log("New Direction " + newDirection);
+        lookDirection = newDirection;
+        OnLookDirectionChange?.Invoke(newDirection);
+    }
+
+    protected Vector2 getLookDirection()
+    {
+        return lookDirection;
+    }
+
+    protected Vector2 getMoveDirection()
+    {
+        return movementDirection;
     }
 }

@@ -20,9 +20,31 @@ public class ObjectGenerator
         this.randomVector = new RandomVectorGenerator(random, map);
     }
 
-    public FeatureData createFeatures()
-    {
+    public FeatureData createFeatures() {
         FeatureData data = new FeatureData();
+        withHouseData(data);
+        withTreeData(data);
+        return data;
+    }
+
+    private List<Vector2Int> sampleSomeChunks()
+    {
+        List<(Vector2Int, BiomeType)> chunks = sampleChunks();
+        List<(Vector2Int, BiomeType)> randomChunks = random.shuffleList(chunks);
+        return randomChunks.Select(x => x.Item1).Take(10).ToList();
+    }
+
+    private void withHouseData(FeatureData data)
+    {
+        foreach (Vector2Int mark in sampleSomeChunks())
+        {
+            List<Vector2Int> samples = populateWithTypeAnyBiome(metaData.houseMetaData, mark, TileObjectDataType.HOUSE);
+            data.addSamples(TileObjectDataType.HOUSE, samples);
+        }
+    }
+
+    private void withTreeData(FeatureData data)
+    {
         List<(Vector2Int, BiomeType)> chunks = sampleChunks();
 
         for (int i = 0; i < chunks.Count; i++)
@@ -30,11 +52,10 @@ public class ObjectGenerator
             Vector2Int mark = chunks[i].Item1;
             BiomeType biome = chunks[i].Item2;
 
-            (TileObjectDataType, List<Vector2Int>) samples = populateFeatureData(mark, biome);
-            Dictionary<Direction, BiomeType> neighbours = getNeighbours(chunks, i); // Need to wait until after the vectors have been moved to chunks...
+            (TileObjectDataType, List<Vector2Int>) samples = populateTreeData(mark, biome);
+            Dictionary<Direction, BiomeType> neighbours = getNeighbours(chunks, i);
             addSamplesWithBlend(data, samples, neighbours, biome);
         }
-        return data;
     }
 
     private void addSamplesWithBlend(FeatureData data, (TileObjectDataType, List<Vector2Int>) samples, Dictionary<Direction, BiomeType> neighbours, BiomeType biome)
@@ -55,7 +76,6 @@ public class ObjectGenerator
                 TileObjectDataType poachedType = treeTypeFor(b);
                 data.addSamples(samples.Item1, trees);
                 data.addSamples(poachedType, poached);
-                //Debug.Log(trees.Count + " " + samples.Item1 + " | " + poached.Count + " " + poachedType);
             }
         }
 
@@ -118,7 +138,8 @@ public class ObjectGenerator
         return dict;
     }
 
-    private (TileObjectDataType, List<Vector2Int>) populateFeatureData(Vector2Int point, BiomeType biome)
+
+    private (TileObjectDataType, List<Vector2Int>) populateTreeData(Vector2Int point, BiomeType biome)
     {
         bool rand = random.randomInt(0, metaData.treeVariance) == 1;
         TileObjectDataType type = TileObjectDataType.TALL_TREE;
@@ -150,7 +171,40 @@ public class ObjectGenerator
         return (type, samples);
     }
 
-    private List<Vector2Int> populateWithType(ObjectSpawnParams treeMetaData, Vector2Int firstPoint, TileObjectDataType type, BiomeType biome)
+    private List<Vector2Int> populateWithType(ObjectSpawnParams metaData, Vector2Int firstPoint, TileObjectDataType type, BiomeType biome)
+    {
+        RandomQueue processList = new RandomQueue(random);
+
+        List<Vector2Int> samples = new List<Vector2Int>();
+
+        processList.push(firstPoint);
+
+        int count = 0;
+        int MAX = 3000;
+
+        while (!processList.isEmpty() && count < MAX)
+        {
+            Vector2Int point = processList.pop();
+            for (int i = 0; i < metaData.k_points; i++)
+            {
+                Vector2Int newPoint = randomVector.randomVector(point, metaData.min_dist, biome, 1);
+
+                if (newPoint != Vector2Int.zero)
+                {
+                    if (inBounds(newPoint) && !near(newPoint, metaData.min_dist, type))
+                    {
+                        processList.push(newPoint);
+                        samples.Add(newPoint);
+                        addToGrid(grid, type, newPoint, metaData);
+                    }
+                }
+            }
+            count++;
+        }
+        return samples;
+    }
+
+    private List<Vector2Int> populateWithTypeAnyBiome(ObjectSpawnParams metaData, Vector2Int firstPoint, TileObjectDataType type)
     {
         RandomQueue processList = new RandomQueue(random);
 
@@ -164,29 +218,46 @@ public class ObjectGenerator
         while (!processList.isEmpty() && count < MAX)
         {
             Vector2Int point = processList.pop();
-            for (int i = 0; i < treeMetaData.k_points; i++)
+            for (int i = 0; i < metaData.k_points; i++)
             {
-                Vector2Int newPoint = randomVector.randomVector(point, treeMetaData.min_dist, biome, 1);
+                Vector2Int newPoint = randomVector.randomVector(point, metaData.min_dist);
 
                 if (newPoint != Vector2Int.zero)
                 {
-                    if (inBounds(newPoint) && !near(newPoint, treeMetaData.min_dist, type))
+                    if (inBounds(newPoint) && !near(newPoint, metaData.min_dist, type))
                     {
                         processList.push(newPoint);
                         samples.Add(newPoint);
-                        addToGrid(grid, type, newPoint, treeMetaData);
+                        addToGrid(grid, type, newPoint, metaData);
                     }
                 }
             }
             count++;
         }
+
         return samples;
     }
 
-    private void addToGrid(int[,] grid, TileObjectDataType type, Vector2Int point, ObjectSpawnParams treeMetaData)
+    private void addToGrid(int[,] grid, TileObjectDataType type, Vector2Int point, ObjectSpawnParams metaData)
     {
         int val = (int)type;
         grid[point.x, point.y] = val;
+
+        return;
+        for (int y = 0; y < metaData.getHeight(); y++)
+        {
+            for (int x = 0; x < metaData.getWidth(); x++)
+            {
+                int relativeX = point.x + x;
+                int relativeY = point.y - y;
+
+                if (relativeX >= 0 && relativeX < grid.GetLength(0) && relativeY >= 0 && relativeY < grid.GetLength(1))
+                {
+                    grid[relativeX, relativeY] = val;
+                }
+            }
+
+        }
     }
 
     private bool near(Vector2Int new_point, int min_dist, TileObjectDataType type)
@@ -302,6 +373,18 @@ class RandomVectorGenerator {
         List<Vector2Int> availableDirections = directions
             .Select(d => getRelative(origin, d, distance))
             .Where(d => isSameBiome(d, biome))
+            .ToList();
+
+        Vector2Int direction = (availableDirections.Count == 0) ? Vector2Int.zero : random.choose(availableDirections);
+
+        return direction;
+    }
+
+        public Vector2Int randomVector(Vector2Int origin, int minDist)
+    {
+        int distance = random.randomInt(0, 2) + minDist;
+        List<Vector2Int> availableDirections = directions
+            .Select(d => getRelative(origin, d, distance))
             .ToList();
 
         Vector2Int direction = (availableDirections.Count == 0) ? Vector2Int.zero : random.choose(availableDirections);

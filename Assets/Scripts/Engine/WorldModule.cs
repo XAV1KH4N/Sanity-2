@@ -49,18 +49,11 @@ public class WorldModule : AppModule
 
     public void createMap()
     {
-        Debug.Log("Begin Map Generation");
         GroundType[,] groundTypes = createGround();
         
         initMap(groundTypes);
         initFactory();
         drawMap(groundTypes);
-        
-        Debug.Log("Complete");
-
-        foreach(Chunk chunk in map.getChunks()) {
-            Debug.Log(chunk.count());
-        }
     }
 
     public GroundType getGroundTypeAt(Vector2Int coords)
@@ -77,7 +70,7 @@ public class WorldModule : AppModule
     private void drawMap(GroundType[,] groundTypes)
     {
         typeMapper.drawMap(groundTypes);
-        typeMapper.drawMarkers(map.getKeys());
+        //typeMapper.drawMarkers(map.getKeys());
     }
 
     private void initFactory()

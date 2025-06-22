@@ -12,6 +12,9 @@ public class ObjectGeneratorMetaData : MonoBehaviour
     public int treeVariance = 5;
 
     [SerializeField]
+    public int houseVariance = 3;
+
+    [SerializeField]
     public ObjectSpawnParams pointyTreeMetaData;
 
     [SerializeField]
@@ -20,4 +23,6 @@ public class ObjectGeneratorMetaData : MonoBehaviour
     [SerializeField]
     public ObjectSpawnParams roundTreeMetaData;
 
+    [SerializeField]
+    public ObjectSpawnParams houseMetaData;
 }

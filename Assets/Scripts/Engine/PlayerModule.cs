@@ -42,7 +42,8 @@ public class PlayerModule : AppModule {
 
     private void addPlayerMovementListeners()
     {
-        playerMovement.OnDirecetionChange += playerSpriteHandler.refreshAnimationParameters;
+        //playerMovement.OnMoveDirectionChange += playerSpriteHandler.refreshAnimationParameters;
+        playerMovement.OnLookDirectionChange += playerSpriteHandler.refreshAnimationParameters;
         playerMovement.OnMovementChange += playerSpriteHandler.refreshAnimationParameters;
     }
 }

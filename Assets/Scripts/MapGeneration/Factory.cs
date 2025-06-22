@@ -5,7 +5,10 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Factory : MonoBehaviour
-{ 
+{
+    [SerializeField]
+    private TileObjectDataModel house;
+
     [SerializeField]
     private TileObjectDataModel roundTree;
     
@@ -49,6 +52,10 @@ public class Factory : MonoBehaviour
                 createTree(coords, roundTree);
                 break;
 
+            case TileObjectDataType.HOUSE:
+                createHouse(coords, house);
+                break;
+
             default:
                 break;
         }
@@ -60,11 +67,15 @@ public class Factory : MonoBehaviour
         {
             case TileObjectDataType.TALL_TREE:
                 return tallTree;
+
             case TileObjectDataType.POINTY_TREE:
                 return pointyTree;
 
             case TileObjectDataType.ROUND_TREE:
                 return roundTree;
+
+            case TileObjectDataType.HOUSE:
+                return house;
 
             default:
                 return null;
@@ -112,7 +123,7 @@ public class Factory : MonoBehaviour
         if (isBottomGround(coords, model))
         {
             updateCollidersAndMap(coords, model);
-            addTopToUpperFeatures(coords, model);
+            addTopToUpperFeatures(coords, model, 2);
             addBottomToCollsion(coords, model);
 
             return true;
@@ -120,11 +131,26 @@ public class Factory : MonoBehaviour
 
         return false;
     }
+    
+    private bool createHouse(Vector2Int coords, TileObjectDataModel model)
+    {
 
-    private void addTopToUpperFeatures(Vector2Int coords, TileObjectDataModel model)
+        if (isBottomGround(coords, model))
+        {
+            updateCollidersAndMap(coords, model);
+            addTopToUpperFeatures(coords, model, 1);
+            addBottomToCollsion(coords, model);
+            return true;
+        }
+
+        return false;
+    }
+    
+
+    private void addTopToUpperFeatures(Vector2Int coords, TileObjectDataModel model, int yMax)
     {
         (int, int) dimensions = model.getDimension();
-        for (int y = 0; y < 2; y++)
+        for (int y = 0; y < yMax; y++)
         {
             for (int x = 0; x < dimensions.Item1; x++)
             {
@@ -204,8 +230,9 @@ public class Factory : MonoBehaviour
                 Vector2Int relative = new Vector2Int(coords.x + x, coords.y - y);
                 bool isCoordTaken = map.isCoordTaken(relative);
                 bool isCollision = collision.GetTile(new(relative.x, relative.y, 0)) != null;
+                bool isFeature = upperFeature.GetTile(new(relative.x, relative.y, 0)) != null;
                 bool isWithinBounds = relative.x >= 0 && relative.y >= 0 && relative.y < map.getHeight() - 1 && relative.x < map.getWidth() - 1;
-                if (isCoordTaken || isCollision || !isWithinBounds) return false;
+                if (isCoordTaken || isFeature || isCollision || !isWithinBounds) return false;
             }
         }
         return true;
