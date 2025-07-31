@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Module : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    private PlayerModule playerModule;
+
+    [SerializeField]
+    private WorldModule worldModule;
+
+    private ChunkEngine chunkEngine;
+
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ChunkEngine chunkEngine = new ChunkEngine(playerModule, worldModule);
     }
 }

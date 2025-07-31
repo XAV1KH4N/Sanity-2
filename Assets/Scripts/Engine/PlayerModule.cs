@@ -1,7 +1,11 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
-public class PlayerModule : AppModule {
+public class PlayerModule : AppModule
+{
 
     [SerializeField]
     private CharacterMovement playerMovement;
@@ -17,6 +21,8 @@ public class PlayerModule : AppModule {
 
     [SerializeField]
     private Tilemap groundLayer;
+
+    public Action OnPlayerMovement;
 
     void Start()
     {
@@ -45,5 +51,11 @@ public class PlayerModule : AppModule {
         //playerMovement.OnMoveDirectionChange += playerSpriteHandler.refreshAnimationParameters;
         playerMovement.OnLookDirectionChange += playerSpriteHandler.refreshAnimationParameters;
         playerMovement.OnMovementChange += playerSpriteHandler.refreshAnimationParameters;
+        playerMovement.OnMovementChange += invokeMovementEvent;
+    }
+
+    private void invokeMovementEvent(bool isMoving)
+    {
+        if (isMoving) OnPlayerMovement?.Invoke();
     }
 }

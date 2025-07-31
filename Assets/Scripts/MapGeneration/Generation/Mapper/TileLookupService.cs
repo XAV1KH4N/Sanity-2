@@ -122,6 +122,7 @@ public class TileLookupService : MonoBehaviour
                 return new Tile[] { debugTile };
 
             default:
+                Debug.Log("Unknown Tile: " + type);
                 return new Tile[] { blankTile };
         }
     }

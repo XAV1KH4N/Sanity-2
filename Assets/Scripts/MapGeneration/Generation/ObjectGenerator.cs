@@ -180,7 +180,7 @@ public class ObjectGenerator
         processList.push(firstPoint);
 
         int count = 0;
-        int MAX = 3000;
+        int MAX = 5;
 
         while (!processList.isEmpty() && count < MAX)
         {

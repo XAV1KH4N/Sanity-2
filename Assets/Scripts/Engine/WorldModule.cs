@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -59,6 +60,36 @@ public class WorldModule : AppModule
     public GroundType getGroundTypeAt(Vector2Int coords)
     {
         return map.getGroundTypeAt(coords);
+    }
+
+    public List<Chunk> getSurroundingChunks(Vector2Int tileCoords)
+    {
+        return map.getSurroundingChunk(tileCoords);
+    }
+
+      public List<Chunk> getChunks()
+    {
+        return map.getChunks();
+    }
+
+    public Chunk getChunk(Vector2Int coods)
+    {
+        return map.getChunkAt(coods);
+    }
+
+
+    public void setTile(Vector2Int coords, GroundType type)
+    {
+        if (coords.x < 0 || coords.x >= map.getWidth() || coords.y < 0 || coords.y >= map.getHeight())
+            return;
+
+        map.setTile(type, coords);
+        Tile tile = tileLookupService.getTile(type);
+        ground.SetTile(to3D(coords), tile);
+    }
+
+    private Vector3Int to3D(Vector2Int coords) {
+        return new Vector3Int(coords.x, coords.y, 0);
     }
 
     private void handleOnObjectEntry(Vector2Int coords, TileData data)

@@ -51,18 +51,43 @@ public class ChunkManager
         return chunks.Keys.ToList();
     }
 
-    private Chunk getChunkFor(Vector2Int coords)
+    public Chunk getChunkFor(Vector2Int coords)
     {
         int x = (coords.x / Chunk.Width) * Chunk.Width;
         int y = (coords.y / Chunk.Height) * Chunk.Height;
         return chunks[new Vector2Int(x, y)];
     }
+    
+    public List<Chunk> getSurroundingChunks(Vector2Int coords)
+    {
+        List<Chunk> surroundingChunks = new List<Chunk>();
+
+        int x = (coords.x / Chunk.Width) * Chunk.Width;
+        int y = (coords.y / Chunk.Height) * Chunk.Height;
+
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                int neighborX = y + (dx * Chunk.Width);
+                int neighborY = x + (dy * Chunk.Height);
+
+                Vector2Int cc = new Vector2Int(neighborX, neighborY);
+                if (chunks.ContainsKey(cc))
+                {
+                    surroundingChunks.Add(chunks[cc]);
+                }
+            }
+        }
+
+        return surroundingChunks;
+    }
 
     private void createChunks()
     {
-        for (int x = 0; x < width; x+= Chunk.Width)
+        for (int x = 0; x < width; x += Chunk.Width)
         {
-            for (int y = 0; y < height; y+= Chunk.Height)
+            for (int y = 0; y < height; y += Chunk.Height)
             {
                 Vector2Int marker = new Vector2Int(x, y);
                 Chunk chunk = new Chunk(marker);

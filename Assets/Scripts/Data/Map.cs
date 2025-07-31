@@ -16,11 +16,17 @@ public class Map
         this.width = groundTypes.GetLength(0);
         this.height = groundTypes.GetLength(1);
         this.chunks = new ChunkManager(width, height);
+        Debug.Log("Map side:" + width.ToString());
     }
 
     public List<Chunk> getChunks()
     {
         return chunks.getChunks();
+    }
+
+    public void setTile(GroundType type, Vector2Int coords)
+    {
+        groundTypes[coords.x, coords.y] = type;
     }
 
     public GroundType getGroundTypeAt(Vector2Int coords)
@@ -29,6 +35,16 @@ public class Map
             return GroundType.GROUND_GRASS;
 
         return groundTypes[coords.x, coords.y];
+    }
+
+    public Chunk getChunkAt(Vector2Int coords)
+    {
+        return chunks.getChunkFor(coords);
+    }
+
+    public List<Chunk> getSurroundingChunk(Vector2Int coords)
+    {
+        return chunks.getSurroundingChunks(coords);
     }
 
     public void addTiledObject(Vector2Int coords, TileData data)

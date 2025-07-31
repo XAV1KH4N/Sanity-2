@@ -501,8 +501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metaData: {fileID: 1120175433}
-  mapWidth: 150
-  mapHeight: 150
+  mapWidth: 1000
+  mapHeight: 1000
   scale: 85
   persistance: 0.7
   lacunarity: 1.75
@@ -3356,6 +3356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3279200aa9065f541a32c114ae4bf5ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerModule: {fileID: 2025015133}
+  worldModule: {fileID: 2025015134}
 --- !u!1 &2101512195
 GameObject:
   m_ObjectHideFlags: 0
